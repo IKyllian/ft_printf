@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/11 12:15:33 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/14 17:53:59 by kdelport         ###   ########lyon.fr   */
+/*   Created: 2020/12/14 12:15:16 by kdelport          #+#    #+#             */
+/*   Updated: 2020/12/14 12:58:12 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putstr(char *str, int *count)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int i;
+	char	*str;
+	int		len;
+	int		i;
 
-	i = 0;
-	while (str[i])
-		ft_putchar(str[i++], count);
-}
-
-void	ft_fill_space(char c, int size, int *count)
-{
-	int i;
-
-	i = 0;
-	while (i++ < size)
-		ft_putchar(c, count);
+	if (!s1 && !s2)
+		return (NULL);
+	i = -1;
+	len = ft_strlen(s1) + ft_strlen(s2);
+	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
+		return (NULL);
+	len = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[++len])
+		str[i + len] = s2[len];
+	str[i + len] = '\0';
+	printf("2 str = %s\n", str);
+	return (str);
 }

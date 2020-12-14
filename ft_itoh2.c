@@ -6,20 +6,23 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:27:19 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/11 16:20:25 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 14:48:44 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_itoh2(int nbr)
+char	*ft_itoh2(int nbr, int is_min)
 {
 	char	*str;
 	char	*base;
 	int		i;
 
 	i = nbr_length(nbr);
-	base = "0123456789abcdef";
+	if (is_min)
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
 	if (!(str = malloc(sizeof(char) * (nbr_length(nbr) + 1))))
 		return (NULL);
 	str[i--] = 0;

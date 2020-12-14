@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/11 12:15:33 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/14 17:53:59 by kdelport         ###   ########lyon.fr   */
+/*   Created: 2020/12/14 12:25:33 by kdelport          #+#    #+#             */
+/*   Updated: 2020/12/14 16:51:00 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putstr(char *str, int *count)
+int		ft_atoi(char *nptr)
 {
-	int i;
+	int		i;
+	long	nbr;
+	int		sign;
 
 	i = 0;
-	while (str[i])
-		ft_putchar(str[i++], count);
-}
-
-void	ft_fill_space(char c, int size, int *count)
-{
-	int i;
-
-	i = 0;
-	while (i++ < size)
-		ft_putchar(c, count);
+	nbr = 0;
+	sign = 1;
+	if (!nptr)
+		return (0);
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (nptr[i] >= 48 && nptr[i] <= 57)
+		nbr = nbr * 10 + (nptr[i++] - 48);
+	return (nbr * sign);
 }

@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itoh.c                                             :+:      :+:    :+:   */
+/*   ft_itoh.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/11 15:28:47 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 18:01:46 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		nbr_length(unsigned long long int nbr)
+int		nbr_length(int nbr)
+{
+	int length;
+
+	length = 0;
+	while (nbr)
+	{
+		length++;
+		nbr /= 10;
+	}
+	return (length);
+}
+
+int		nbr_length_hexa(unsigned long long int nbr)
 {
 	int length;
 
@@ -27,11 +40,11 @@ int		nbr_length(unsigned long long int nbr)
 
 char	*ft_itoh(unsigned long long int nbr)
 {
-	char *str;
-	int i;
-	char *base;
-	int final_int[100];
-	int x;
+	char	*str;
+	int		i;
+	char	*base;
+	int		final_int[100];
+	int		x;
 
 	x = 0;
 	i = 0;

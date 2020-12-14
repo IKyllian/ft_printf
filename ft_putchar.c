@@ -6,13 +6,14 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:15:11 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/11 12:16:06 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 11:01:54 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putchar(char c)
+void	ft_putchar(char c, int *count)
 {
 	write(1, &c, 1);
+	(*count)++;
 }
