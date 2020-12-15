@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/14 18:01:46 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/15 15:22:55 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		nbr_length(int nbr)
 	return (length);
 }
 
-int		nbr_length_hexa(unsigned long long int nbr)
+int		nbr_length_hexa(unsigned long nbr)
 {
 	int length;
 
@@ -38,7 +38,7 @@ int		nbr_length_hexa(unsigned long long int nbr)
 	return (length);
 }
 
-char	*ft_itoh(unsigned long long int nbr)
+char	*ft_itoh(unsigned long nbr)
 {
 	char	*str;
 	int		i;
