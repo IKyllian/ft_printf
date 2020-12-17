@@ -1,2 +1,3 @@
 %u = Prends en compte les nombres negatifs a cause du cast sur l'appelle de la fonction;
 %x = fonction itoh qui marche bien pour %p mais possede des details en trop pour le %x (met 0x au debut de str) --> Soit faire deux fonctions ft_itoh presques identiques soit faire des exeptions; 
+Check malloc pour la taille des nombres negatifs

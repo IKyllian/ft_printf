@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/15 17:11:19 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 15:18:47 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	struct_initialize(t_struct *flags)
 {
 	flags->has_negative = 0;
 	flags->spaces_number = 0;
-	flags->has_point = 0;
+	flags->has_point = -1;
 	flags->has_zero = 0;
 	flags->has_multiple = 0;
 }
@@ -30,7 +30,7 @@ int		is_conversions(char c)
 		return (0);
 }
 
-t_struct	check_prefix(char **str)
+t_struct	check_prefix(char **str, va_list list)
 {
 	t_struct flags;
 	int i;
@@ -40,7 +40,7 @@ t_struct	check_prefix(char **str)
 	i = 0;
 	nb = 0;
 	struct_initialize(&flags);
-	while (*(*str) && (!(*(*str) >= 49 && *(*str) <= 57) && !is_conversions(*(*str))))
+	while (*(*str) && !is_conversions(*(*str)))
 	{
 		if (*(*str) == '0' && !flags.has_negative)
 			flags.has_zero = 1;
@@ -50,28 +50,46 @@ t_struct	check_prefix(char **str)
 				flags.has_zero = 0;
 			flags.has_negative = 1;
 		}
-		if (*(*str) == '*')
-			flags.has_multiple = 1;
 		if (*(*str) == '.')
-			flags.has_point = 1;
-		(*str)++;
+			flags.has_point = 0;
+		if (*(*str) == '*')
+		{
+			nb = va_arg(list, int);
+			if (*(*str + 1) == '.')
+			{
+				flags.has_point = nb;
+				(*str)++;
+			}
+			else
+				flags.has_multiple = nb;
+		}
+		if (*(*str) >= 48 && *(*str) <= 57)
+		{
+			while ((*str)[i] && ((*str)[i] >= 48 && (*str)[i] <= 57))
+				i++;
+			nb_spaces = malloc(sizeof(char) * (i + 1));
+			//if (!(nb_spaces = malloc(sizeof(char) * (i + 1))))
+			//	return (NULL);
+			i = 0;
+			while (*(*str) && (*(*str) >= 48 && *(*str) <= 57))
+			{
+				nb_spaces[i++] = *(*str);
+				(*str)++;
+			}
+			nb_spaces[i] = 0;
+			nb = ft_atoi(nb_spaces);
+			free(nb_spaces);
+			if (*(*str) == '.')
+			{
+				flags.has_point = nb;
+				(*str)++;
+			}
+			else
+				flags.spaces_number = nb;
+		}
+		else
+			(*str)++;
 	}
-	while ((*str)[i] && ( (*str)[i] >= 48 && (*str)[i] <= 57))
-		i++;
-	//if (!(nb_spaces = malloc(sizeof(char) * (i + 1))))
-	//	return (NULL);
-	nb_spaces = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (*(*str) && (*(*str) >= 48 && *(*str) <= 57))
-	{
-		nb_spaces[i++] = *(*str);
-		(*str)++;
-	}
-	nb_spaces[i] = 0;
-	nb = atoi(nb_spaces);
-	free(nb_spaces);
-	if (nb)
-		flags.spaces_number = nb;
 	return (flags);
 }
 
@@ -81,7 +99,7 @@ void	ft_display(char **str, va_list list, int *count)
 
 	struct_initialize(&flags);
 	if (!is_conversions(*(*str)))
-		flags = check_prefix(str);
+		flags = check_prefix(str, list);
 	if (*(*str) == 's')
 		to_string(list, count, flags);
 	else if (*(*str) == 'd' || *(*str) == 'i')
@@ -139,12 +157,9 @@ int		main()
 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
 
 	//printf("Test flag : %-10d\n", nb);
-	//res = ft_printf("Mine Printf %0-*d\n", 10, nb);
-	//res = ft_printf(" 0*%0-*d*0 0*%0*d*0 \n", 21, 1021, 21, -1011);
-	//res2 = printf("Real Printf %0-*d\n", 10, nb);
-	//res2 = printf(" 0*%0-*d*0 0*%0*d*0 \n", 21, 1021, 21, -1011);
-	res = ft_printf(" *%-*.*d* *%*.*d* \n", 4, 5, 10, 10, 21, -10);
-	res2 = printf(" *%-*.*d* *%*.*d* ", 4, 5, 10, 10, 21, -10);
+	res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+	res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
 	
 	printf("Res = %i\n", res);
 	printf("Res2 = %i", res2);

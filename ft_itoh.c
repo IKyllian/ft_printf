@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/15 15:22:55 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 13:55:52 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ int		nbr_length(int nbr)
 	int length;
 
 	length = 0;
-	while (nbr)
+	if (nbr < 0)
+		nbr *= -1;
+	while (nbr >= 10)
 	{
 		length++;
 		nbr /= 10;
 	}
-	return (length);
+	return (++length);
 }
 
 int		nbr_length_hexa(unsigned long nbr)

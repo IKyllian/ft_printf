@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/15 15:29:02 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 15:17:09 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,11 @@
 void	to_string(va_list list, int *count, t_struct flags)
 {
 	char *str;
-	int nb;
 
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
 	str = va_arg(list, char *);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
+		flags.spaces_number = flags.has_multiple;
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.spaces_number - ft_strlen(str)), count);
 		else if (!flags.has_negative)
@@ -44,50 +39,114 @@ void	to_string(va_list list, int *count, t_struct flags)
 		ft_fill_space(' ', (flags.spaces_number - ft_strlen(str)), count);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void	to_decimal(va_list list, int *count, t_struct flags)
 {
 	int nbr;
-	int nb;
-
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
+	
 	nbr = va_arg(list, int);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
-		if (flags.has_zero && !flags.has_negative)
-			ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
+		if (nbr < 0)
+			ft_putchar('-', count);
+		if ((flags.has_zero && !flags.has_negative) || flags.has_point)
+			ft_fill_space('0', (flags.has_multiple - nbr_length(nbr)), count);
 		else if (!flags.has_negative)
-			ft_fill_space(' ', (flags.spaces_number - nbr_length(nbr)), count);
+			ft_fill_space(' ', (flags.has_multiple - nbr_length(nbr)), count);
 	}
-	
-	if (flags.spaces_number && !flags.has_negative && !flags.has_multiple)
+	if (flags.has_point > 0 && !flags.has_negative && !flags.has_multiple)
 	{
-		if (flags.has_zero)
+		if (flags.spaces_number >= nbr_length(nbr))
+		{
+			if ((flags.has_point - flags.spaces_number) > 0)
+				ft_fill_space(' ', (flags.has_point - flags.spaces_number), count);
+		}
+		else
+			if ((flags.has_point - nbr_length(nbr)) > 0)
+				ft_fill_space(' ', (flags.has_point - nbr_length(nbr)), count);
+	}
+	if ( (flags.spaces_number && !flags.has_negative && !flags.has_multiple) || (flags.spaces_number && flags.has_negative && flags.has_point) )
+	{
+		if (nbr < 0)
+			ft_putchar('-', count);
+		if (flags.has_zero || flags.has_point)
 			ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
 		else
 			ft_fill_space(' ', (flags.spaces_number - nbr_length(nbr)), count);
 	}
 	ft_putnbr(nbr, count);
-	if (flags.has_negative)
+	
+	if (flags.has_negative && flags.has_point < 0)
+	{
 		ft_fill_space(' ', (flags.spaces_number - nbr_length(nbr)), count);
+	}
+	else if (flags.has_negative && flags.has_point == 0)
+		ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
+	else if (flags.has_negative && flags.has_point && !flags.has_multiple)
+	{
+		if (flags.spaces_number < nbr_length(nbr))
+			flags.spaces_number = nbr_length(nbr);
+		if ((flags.has_point - flags.spaces_number) > 0)
+			ft_fill_space(' ', (flags.has_point - flags.spaces_number), count);
+	}
+	else if (flags.has_negative && flags.has_point && flags.has_multiple)
+	{
+		if (flags.has_multiple < nbr_length(nbr))
+			flags.has_multiple = nbr_length(nbr);
+		if ((flags.has_point - flags.has_multiple) > 0)
+			ft_fill_space(' ', (flags.has_point - flags.has_multiple), count);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 {
 	unsigned int	nbr;
-	int				nb;
 
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
 	nbr = va_arg(list, unsigned int);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
+		flags.spaces_number = flags.has_multiple;
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
 		else if (!flags.has_negative)
@@ -109,16 +168,11 @@ void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 {
 	int	nbr;
-	int	nb;
 
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
 	nbr = va_arg(list, int);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
+		flags.spaces_number = flags.has_multiple;
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.spaces_number - nbr_length_hexa(nbr)), count);
 		else if (!flags.has_negative)
@@ -140,16 +194,11 @@ void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 void	to_character(va_list list, int *count, t_struct flags)
 {
 	int	nbr;
-	int	nb;
 
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
 	nbr = va_arg(list, int);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
+		flags.spaces_number = flags.has_multiple;
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.spaces_number - 1), count);
 		else if (!flags.has_negative)
@@ -172,16 +221,11 @@ void	to_pointer_address(va_list list, int *count, t_struct flags)
 {
 
 	void *input;
-	int	nb;
 
-	if (flags.has_multiple)
-		nb = va_arg(list, int);
-	else
-		nb = 0;
 	input = va_arg(list, void *);
 	if (flags.has_multiple)
 	{
-		flags.spaces_number = nb;
+		flags.spaces_number = flags.has_multiple;
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.spaces_number -  nbr_length_hexa((unsigned long)input)), count);
 		else if (!flags.has_negative)
