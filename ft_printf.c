@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/17 15:18:47 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 17:09:39 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,24 +143,27 @@ int		ft_printf(const char *format, ...)
 }
 
 
-int		main()
-{
-	int nb = 42;
-	char *str = "TEST";
-	int c = 0;
-	unsigned int u_nb = 10;
-	int res;
-	int res2;
-	//float fnb = 52.48797979796;
+ int		main()
+ {
+// 	int nb = 42;
+// 	char *str = "TEST";
+// 	int c = 0;
+// 	unsigned int u_nb = 10;
+ 	int res;
+ 	int res2;
+// 	//float fnb = 52.48797979796;
 
-	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
-	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
+// 	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
+// 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
 
-	//printf("Test flag : %-10d\n", nb);
-	res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-	res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
+// 	//printf("Test flag : %-10d\n", nb);
+// 	res = ft_printf("Mine %-2.2d\n", 0);
+// 	res2 = printf  ("Real %-2.2d\n", 0);
+
+	res = ft_printf("Mine 0*%0-*d*0 0*%0*d*0\n", 21, 1021, 21, -1011);
+	res2 = printf  ("Real 0*%0-*d*0 0*%0*d*0\n", 21, 1021, 21, -1011);
+// 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
 	
-	printf("Res = %i\n", res);
+ 	printf("Res = %i\n", res);
 	printf("Res2 = %i", res2);
-}
+ }
