@@ -19,7 +19,7 @@ void	ft_putnbr(int n, int *count)
 	nb = n;
 	if (nb == -2147483648)
 	{
-		write(1, "-2147483648", 11);
+		ft_putstr("2147483648", count);
 		return ;
 	}
 	if (nb < 0)

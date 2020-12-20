@@ -25,6 +25,7 @@ typedef struct	s_struct
 	int 		has_zero;
 	int 		spaces_number;
 	int 		has_point;
+	int 		point_value;
 	int 		has_multiple;
 }				t_struct;
 

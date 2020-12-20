@@ -60,84 +60,83 @@ void	to_decimal(va_list list, int *count, t_struct flags)
 	int nbr;
 	
 	nbr = va_arg(list, int);
-
-	if (flags.has_point > 0 && !flags.has_negative)
+	if (flags.has_point && !flags.has_negative)
 	{
-		if (flags.has_multiple && flags.has_point > flags.has_multiple)
+		if (flags.has_multiple && flags.point_value > flags.has_multiple)
 		{
 			if (nbr < 0)
-				flags.has_point -= 1;
-			ft_fill_space(' ', (flags.has_point - flags.has_multiple), count);
+				flags.point_value -= 1;
+			ft_fill_space(' ', (flags.point_value - flags.has_multiple), count);
 		}
 		else if (!flags.has_multiple)
 		{		
 			if (flags.spaces_number >= nbr_length(nbr))
 			{
-				if ((flags.has_point - flags.spaces_number) > 0)
-					ft_fill_space(' ', (flags.has_point - flags.spaces_number), count);
+				if ((flags.point_value - flags.spaces_number) > 0)
+					ft_fill_space(' ', (flags.point_value - flags.spaces_number), count);
 			}
 			else
-				if ((flags.has_point - nbr_length(nbr)) > 0)
-					ft_fill_space(' ', (flags.has_point - nbr_length(nbr)), count);
+				if ((flags.point_value - nbr_length(nbr)) > 0)
+					ft_fill_space(' ', (flags.point_value - nbr_length(nbr)), count);
 		}
 	}
-	
+
 	if (flags.has_multiple)
 	{
 		if (nbr < 0)
+		{
+			if (!flags.has_point)
+				flags.has_multiple -= 1;
 			ft_putchar('-', count);
-		if ((flags.has_zero && !flags.has_negative) || (flags.has_point && !flags.has_negative))
+		}
+		if ((flags.has_zero && !flags.has_negative) || flags.point_value)
+		{
 			ft_fill_space('0', (flags.has_multiple - nbr_length(nbr)), count);
+		}
 		else if (!flags.has_negative)
 			ft_fill_space(' ', (flags.has_multiple - nbr_length(nbr)), count);
 	}
-	
-	
-
-
-	
-
-
-	
-
-
-	if ( (flags.spaces_number && !flags.has_negative && !flags.has_multiple) || (flags.spaces_number && flags.has_negative && flags.has_point) )
+	else if ( (flags.spaces_number && !flags.has_negative && !flags.has_multiple) || (flags.spaces_number && flags.has_negative && flags.point_value) )
 	{
 		if (nbr < 0)
 			ft_putchar('-', count);
-		if (flags.has_zero || flags.has_point)
+		if (flags.has_zero || flags.point_value)
 			ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
 		else
 			ft_fill_space(' ', (flags.spaces_number - nbr_length(nbr)), count);
 	}
-
-
-	ft_putnbr(nbr, count);
-	//printf("negative = %i | point = %i | multiple = %i", flags.has_negative, flags.has_point, flags.has_multiple);
-	if (flags.spaces_number && flags.has_negative && flags.has_point < 0)
+	else if (nbr < 0)
+		ft_putchar('-', count);
+	if (nbr == 0 && flags.point_value && (!flags.spaces_number && !flags.has_multiple))
+		ft_putchar(' ', count);
+	else
+		ft_putnbr(nbr, count);
+	if (flags.spaces_number && flags.has_negative && !flags.has_point)
 	{
 		ft_fill_space(' ', (flags.spaces_number - nbr_length(nbr)), count);
 	}
-	else if (flags.has_multiple && flags.has_negative && flags.has_point < 0)
+	else if (flags.has_multiple && flags.has_negative && !flags.has_point)
 	{
 		ft_fill_space(' ', (flags.has_multiple - nbr_length(nbr)), count);
 	}
-	else if (flags.has_negative && flags.has_point == 0)
+	else if (flags.has_negative && flags.has_point && !flags.point_value)
 		ft_fill_space('0', (flags.spaces_number - nbr_length(nbr)), count);
-	else if (flags.has_negative && flags.has_point && !flags.has_multiple)
+	else if (flags.has_negative && flags.point_value && !flags.has_multiple)
 	{
 		if (flags.spaces_number < nbr_length(nbr))
 			flags.spaces_number = nbr_length(nbr);
-		if ((flags.has_point - flags.spaces_number) > 0)
-			ft_fill_space(' ', (flags.has_point - flags.spaces_number), count);
+		if (nbr < 0)
+			flags.point_value -= 1;
+		if ((flags.point_value - flags.spaces_number) > 0)
+			ft_fill_space(' ', (flags.point_value - flags.spaces_number), count);
 	}
-	else if (flags.has_negative && flags.has_point && flags.has_multiple)
+	else if (flags.has_negative && flags.point_value && flags.has_multiple)
 	{
-		
 		if (flags.has_multiple < nbr_length(nbr))
 			flags.has_multiple = nbr_length(nbr);
-		if ((flags.has_point - flags.has_multiple) > 0)
-			ft_fill_space(' ', (flags.has_point - flags.has_multiple), count);
+		
+		if ((flags.point_value - flags.has_multiple) > 0)
+			ft_fill_space(' ', (flags.point_value - flags.has_multiple), count);
 	}
 }
 
