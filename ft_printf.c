@@ -173,8 +173,22 @@ int		ft_printf(const char *format, ...)
  	 //res = ft_printf("Mine %-2.2d\n", 0);
  	 //res2 = printf  ("Real %-2.2d\n", 0);
 
-	res = ft_printf("Mine %*.5s %4.*s\n", 10, "123", 10, "4567");
-	res2 = printf  ("Real %*.5s %0.*s\n", 10, "123", 10, "4567");
+	res = ft_printf("Mine %*.s %.1s\n", 10, "123", "4567");
+	res2 = printf  ("Real %*.s %.1s\n", 10, "123", "4567");
+
+	res = ft_printf("Mine %*.0s %.2s\n", 10, "123", "4567");
+	res2 = printf  ("Real %*.0s %.2s\n", 10, "123", "4567");
+
+	res = ft_printf("Mine %*.3s %.3s\n", 10, "123", "4567");
+	res2 = printf  ("Real %*.3s %.3s\n", 10, "123", "4567");
+
+	res = ft_printf("Mine %*.4s %.4s\n", 10, "123", "4567");
+	res2 = printf  ("Real %*.4s %.4s\n", 10, "123", "4567");
+
+	res = ft_printf("Mine %*.5s %.5s\n", 10, "123", "4567");
+	res2 = printf  ("Real %*.5s %.5s\n", 10, "123", "4567");
+	//res2 = printf  ("%10.3s\n", "12345");
+
 	// printf("Res = %i\n", res);
 	// printf("Res2 = %i\n", res2);
 	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);

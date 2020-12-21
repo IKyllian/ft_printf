@@ -36,10 +36,10 @@ void	to_string(va_list list, int *count, t_struct flags)
 				ft_fill_space(' ', (flags.dot_value - flags.has_multiple), count);
 		}
 	}
-
 	if (flags.has_multiple)
 	{
 		size = flags.has_multiple;
+		
 		if (flags.has_zero && !flags.has_negative)
 			ft_fill_space('0', (flags.has_multiple - ft_strlen(str)), count);
 		else if (!flags.has_negative)
@@ -48,6 +48,7 @@ void	to_string(va_list list, int *count, t_struct flags)
 	else if (flags.spaces_number && !flags.has_negative && !flags.has_multiple)
 	{
 		size = flags.spaces_number;
+		if (!flags.dot_value)
 		if (flags.has_zero)
 			ft_fill_space('0', (flags.spaces_number - ft_strlen(str)), count);
 		else
