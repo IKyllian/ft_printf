@@ -15,14 +15,16 @@
 int		nbr_length(int nbr)
 {
 	int length;
+	long long l_nbr;
 
+	l_nbr = nbr;
 	length = 0;
-	if (nbr < 0)
-		nbr *= -1;
-	while (nbr >= 10)
+	if (l_nbr < 0)
+		l_nbr *= -1;
+	while (l_nbr >= 10)
 	{
 		length++;
-		nbr /= 10;
+		l_nbr /= 10;
 	}
 	return (++length);
 }
@@ -32,12 +34,12 @@ int		nbr_length_hexa(unsigned long nbr)
 	int length;
 
 	length = 0;
-	while (nbr)
+	while (nbr >= 16)
 	{
 		length++;
 		nbr /= 16;
 	}
-	return (length);
+	return (++length);
 }
 
 char	*ft_itoh(unsigned long nbr)

@@ -16,8 +16,8 @@ void	struct_initialize(t_struct *flags)
 {
 	flags->has_negative = 0;
 	flags->spaces_number = 0;
-	flags->has_point = 0;
-	flags->point_value = 0;
+	flags->has_dot = 0;
+	flags->dot_value = 0;
 	flags->has_zero = 0;
 	flags->has_multiple = 0;
 }
@@ -43,7 +43,7 @@ t_struct	check_prefix(char **str, va_list list)
 	struct_initialize(&flags);
 	while (*(*str) && !is_conversions(*(*str)))
 	{
-		if (*(*str) == '0' && !flags.has_negative)
+		if (*(*str) == '0' && !flags.has_negative && !flags.has_dot)
 			flags.has_zero = 1;
 		if (*(*str) == '-')
 		{
@@ -52,14 +52,14 @@ t_struct	check_prefix(char **str, va_list list)
 			flags.has_negative = 1;
 		}
 		if (*(*str) == '.')
-			flags.has_point = 1;
+			flags.has_dot = 1;
 		if (*(*str) == '*')
 		{
 			nb = va_arg(list, int);
 			if (*(*str + 1) == '.')
 			{
-				flags.has_point = 1;
-				flags.point_value = nb;
+				flags.has_dot = 1;
+				flags.dot_value = nb;
 				(*str)++;
 			}
 			else
@@ -83,8 +83,8 @@ t_struct	check_prefix(char **str, va_list list)
 			free(nb_spaces);
 			if (*(*str) == '.')
 			{
-				flags.has_point = 1;
-				flags.point_value = nb;
+				flags.has_dot = 1;
+				flags.dot_value = nb;
 				(*str)++;
 			}
 			else
@@ -93,10 +93,10 @@ t_struct	check_prefix(char **str, va_list list)
 		else
 			(*str)++;
 	}
-	if (flags.point_value < 0)
+	if (flags.dot_value < 0)
 	{
 		flags.has_negative = 1;
-		flags.point_value *= -1;
+		flags.dot_value *= -1;
 	}
 	if (flags.has_multiple < 0)
 	{
@@ -156,31 +156,31 @@ int		ft_printf(const char *format, ...)
 }
 
 
-//  int		main()
-//  {
-// // 	int nb = 42;
-// // 	char *str = "TEST";
-// // 	int c = 0;
-// // 	unsigned int u_nb = 10;
-//  	int res;
-//  	int res2;
-// // 	//float fnb = 52.48797979796;
+ int		main()
+ {
+// 	int nb = 42;
+// 	char *str = "TEST";
+// 	int c = 0;
+// 	unsigned int u_nb = 10;
+ 	int res;
+ 	int res2;
+// 	//float fnb = 52.48797979796;
 
-// // 	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
-// // 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
+// 	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
+// 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
 
-// // 	//printf("Test flag : %-10d\n", nb);
-//  	 //res = ft_printf("Mine %-2.2d\n", 0);
-//  	 //res2 = printf  ("Real %-2.2d\n", 0);
+// 	//printf("Test flag : %-10d\n", nb);
+ 	 //res = ft_printf("Mine %-2.2d\n", 0);
+ 	 //res2 = printf  ("Real %-2.2d\n", 0);
 
-// 	res = ft_printf("Mine --0*%0*.0d*0 0*%0*.10d*0--\n",-21, 2147483647, 21, -2147483648);
-// 	res2 = printf  ("Real --0*%0*.0d*0 0*%0*.10d*0--\n",-21, 2147483647, 21, -2147483648);
-// 	// printf("Res = %i\n", res);
-// 	// printf("Res2 = %i\n", res2);
-// 	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-// 	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-// // 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
+	res = ft_printf("Mine %*.5s %4.*s\n", 10, "123", 10, "4567");
+	res2 = printf  ("Real %*.5s %0.*s\n", 10, "123", 10, "4567");
+	// printf("Res = %i\n", res);
+	// printf("Res2 = %i\n", res2);
+	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+// 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
 	
-//  	printf("Res = %i\n", res);
-// 	printf("Res2 = %i", res2);
-//  }
+ 	printf("Res = %i\n", res);
+	printf("Res2 = %i", res2);
+ }

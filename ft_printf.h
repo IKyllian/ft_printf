@@ -24,8 +24,8 @@ typedef struct	s_struct
 	int 		has_negative;
 	int 		has_zero;
 	int 		spaces_number;
-	int 		has_point;
-	int 		point_value;
+	int 		has_dot;
+	int 		dot_value;
 	int 		has_multiple;
 }				t_struct;
 
@@ -47,5 +47,8 @@ void	to_pointer_address(va_list list, int *count, t_struct flags);
 void	to_string(va_list list, int *count, t_struct flags);
 void	ft_fill_space(char c, int size, int *count);
 int		nbr_length_hexa(unsigned long nbr);
-
+void	operands_dot(t_struct flags, int *count, int arg, int argc_length);
+void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length);
+void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length);
+void	ft_unsigned_putnbr(unsigned int n, int *count);
 #endif

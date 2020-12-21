@@ -23,10 +23,21 @@ void	ft_putnbr(int n, int *count)
 		return ;
 	}
 	if (nb < 0)
-	{
-		//ft_putchar('-', count);
 		nb *= -1;
+	if (nb >= 10)
+	{
+		ft_putnbr(nb / 10, count);
+		ft_putnbr(nb % 10, count);
 	}
+	else
+		ft_putchar(nb + 48, count);
+}
+
+void	ft_unsigned_putnbr(unsigned int n, int *count)
+{
+	unsigned long nb;
+
+	nb = n;
 	if (nb >= 10)
 	{
 		ft_putnbr(nb / 10, count);
