@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/17 17:22:31 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 12:46:10 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,60 +15,29 @@
 void	to_string(va_list list, int *count, t_struct flags)
 {
 	char *str;
-	int size;
+	int space_is_neg;
 
+	space_is_neg = 0;
+	if (flags.dot_value < 0)
+	{
+		flags.has_negative = 1;
+		flags.dot_value *= -1;
+		space_is_neg = 1;
+	}
+	if (flags.has_multiple < 0)
+	{
+		flags.has_negative = 1;
+		flags.has_multiple *= -1;
+		space_is_neg = 1;
+	}
 	str = va_arg(list, char *);
-	size = 0;
-	if (flags.dot_value)
-	{
-		if (flags.spaces_number)
-		{
-			if (flags.has_zero && !flags.has_negative)
-				ft_fill_space('0', (flags.dot_value - flags.spaces_number), count);
-			else if (!flags.has_negative)
-				ft_fill_space(' ', (flags.dot_value - flags.spaces_number), count);
-		}
-		else
-		{
-			if (flags.has_zero && !flags.has_negative)
-				ft_fill_space('0', (flags.dot_value - flags.has_multiple), count);
-			else if (!flags.has_negative)
-				ft_fill_space(' ', (flags.dot_value - flags.has_multiple), count);
-		}
-	}
-	if (flags.has_multiple)
-	{
-		size = flags.has_multiple;
-		
-		if (flags.has_zero && !flags.has_negative)
-			ft_fill_space('0', (flags.has_multiple - ft_strlen(str)), count);
-		else if (!flags.has_negative)
-			ft_fill_space(' ', (flags.has_multiple - ft_strlen(str)), count);
-	}
-	else if (flags.spaces_number && !flags.has_negative && !flags.has_multiple)
-	{
-		size = flags.spaces_number;
-		if (!flags.dot_value)
-		if (flags.has_zero)
-			ft_fill_space('0', (flags.spaces_number - ft_strlen(str)), count);
-		else
-			ft_fill_space(' ', (flags.spaces_number - ft_strlen(str)), count);
-	}
-	if (flags.has_dot)
-	{
-		if (size > ft_strlen(str))
-			size = ft_strlen(str);
-		while (str && size--)
-			ft_putchar(*str++, count);
-	}
-	else
-		ft_putstr(str, count);
-	if (flags.has_negative)
-		ft_fill_space(' ', (flags.spaces_number - ft_strlen(str)), count);
+	if (!str)
+		str = "(null)";
+	operands_string_dot(flags, count);
+	operands_spaces_string_prefix(flags, count, str);
+	print_string(flags, count, str, space_is_neg);
+	operands_spaces_string_suffix(flags, count, str);
 }
-
-
-
 
 void	to_decimal(va_list list, int *count, t_struct flags)
 {
@@ -85,7 +54,6 @@ void	to_decimal(va_list list, int *count, t_struct flags)
 		ft_putnbr(nbr, count);
 	operands_spaces_suffix(flags, count, nbr, nbr_length(nbr));
 }
-
 
 void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 {
@@ -105,15 +73,15 @@ void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 
 void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 {
-	int	nbr;
-
-	nbr = va_arg(list, int);
+	unsigned long long nbr;
+	
+	nbr = (unsigned int)va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
 		return ;
 	operands_dot(flags, count, nbr, nbr_length_hexa(nbr));
 	operands_spaces_prefix(flags, count, nbr, nbr_length_hexa(nbr));
 	ft_putstr(ft_itoh2(nbr, is_min), count);
-		operands_spaces_suffix(flags, count, nbr, nbr_length_hexa(nbr));
+	operands_spaces_suffix(flags, count, nbr, nbr_length_hexa(nbr));
 
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operands_flags.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/22 12:08:29 by kdelport          #+#    #+#             */
+/*   Updated: 2020/12/22 12:53:52 by kdelport         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	operands_dot(t_struct flags, int *count, int arg, int argc_length)

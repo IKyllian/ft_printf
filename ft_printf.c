@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/17 17:09:39 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 12:50:20 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ t_struct	check_prefix(char **str, va_list list)
 		else
 			(*str)++;
 	}
-	if (flags.dot_value < 0)
+	if (flags.dot_value < 0 && *(*str) != 's')
 	{
 		flags.has_negative = 1;
 		flags.dot_value *= -1;
 	}
-	if (flags.has_multiple < 0)
+	if (flags.has_multiple < 0 && *(*str) != 's')
 	{
 		flags.has_negative = 1;
 		flags.has_multiple *= -1;
@@ -173,27 +173,29 @@ int		ft_printf(const char *format, ...)
  	 //res = ft_printf("Mine %-2.2d\n", 0);
  	 //res2 = printf  ("Real %-2.2d\n", 0);
 
-	res = ft_printf("Mine %*.s %.1s\n", 10, "123", "4567");
-	res2 = printf  ("Real %*.s %.1s\n", 10, "123", "4567");
+	// res = ft_printf("Mine %*.s %.1s\n", 10, "123", "4567");
+	// res2 = printf  ("Real %*.s %.1s\n", 10, "123", "4567");
 
-	res = ft_printf("Mine %*.0s %.2s\n", 10, "123", "4567");
-	res2 = printf  ("Real %*.0s %.2s\n", 10, "123", "4567");
+	// res = ft_printf("Mine %*.0s %.2s\n", 10, "123", "4567");
+	// res2 = printf  ("Real %*.0s %.2s\n", 10, "123", "4567");
 
-	res = ft_printf("Mine %*.3s %.3s\n", 10, "123", "4567");
-	res2 = printf  ("Real %*.3s %.3s\n", 10, "123", "4567");
+	// res = ft_printf("Mine %*.3s %.3s\n", 10, "123", "4567");
+	// res2 = printf  ("Real %*.3s %.3s\n", 10, "123", "4567");
 
-	res = ft_printf("Mine %*.4s %.4s\n", 10, "123", "4567");
-	res2 = printf  ("Real %*.4s %.4s\n", 10, "123", "4567");
+	// res = ft_printf("Mine %*.4s %.4s\n", 10, "123", "4567");
+	// res2 = printf  ("Real %*.4s %.4s\n", 10, "123", "4567");
 
-	res = ft_printf("Mine %*.5s %.5s\n", 10, "123", "4567");
-	res2 = printf  ("Real %*.5s %.5s\n", 10, "123", "4567");
-	//res2 = printf  ("%10.3s\n", "12345");
+	// res = ft_printf("Mine %*.4s %.*s\n", 10, "123", 5, "4567");
+	// res2 = printf  ("Real %*.4s %.*s\n", 10, "123", 5, "4567");
+
+	res = ft_printf("Mine %-3.2x %10.2x\n", 1, -1);
+	res2 = printf  ("Real %-3.2x %10.2x\n", 1, -1);
 
 	// printf("Res = %i\n", res);
 	// printf("Res2 = %i\n", res2);
 	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
 	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-// 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
+ 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
 	
  	printf("Res = %i\n", res);
 	printf("Res2 = %i", res2);
