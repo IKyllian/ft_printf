@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 12:08:29 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/22 16:22:48 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 17:36:30 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg
 
 void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print)
 {
-	if (flags.has_multiple)
+	if ((flags.has_multiple && !flags.has_negative && flags.has_multiple > argc_length)
+			|| (flags.has_multiple && flags.has_negative && flags.dot_value))
 	{
 		if (arg < 0)
 		{
@@ -84,16 +85,25 @@ void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length
 		if (arg < 0 && !flags.has_zero && !*neg_is_print)
 			ft_putchar('-', count);
 	}
-	else if (arg < 0 && !*neg_is_print)
+	else if (arg < 0 && !(*neg_is_print))
 		ft_putchar('-', count);
+	
 }
 
 void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length)
 {
 	if (flags.spaces_number && flags.has_negative && !flags.has_dot)
+	{
+		if (arg < 0)
+			flags.spaces_number -= 1;
 		ft_fill_space(' ', (flags.spaces_number - argc_length), count);
+	}
 	else if (flags.has_multiple && flags.has_negative && !flags.has_dot)
-		ft_fill_space(' ', (flags.has_multiple - argc_length), count);
+	{
+		if (arg < 0)
+			flags.has_multiple -= 1;
+			ft_fill_space(' ', (flags.has_multiple - argc_length), count);
+	}
 	else if (flags.has_negative && flags.has_dot && !flags.dot_value)
 		ft_fill_space('0', (flags.spaces_number - argc_length), count);
 	else if (flags.has_negative && flags.dot_value && !flags.has_multiple)
