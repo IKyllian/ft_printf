@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/22 12:50:20 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 16:29:06 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,47 +156,48 @@ int		ft_printf(const char *format, ...)
 }
 
 
- int		main()
- {
-// 	int nb = 42;
-// 	char *str = "TEST";
-// 	int c = 0;
-// 	unsigned int u_nb = 10;
- 	int res;
- 	int res2;
-// 	//float fnb = 52.48797979796;
+//  int		main()
+//  {
+// // 	int nb = 42;
+// // 	char *str = "TEST";
+// // 	int c = 0;
+// // 	unsigned int u_nb = 10;
+//  	int res;
+//  	int res2;
+// // 	//float fnb = 52.48797979796;
 
-// 	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
-// 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
+// // 	//res = ft_printf("Mine Printf test  - %010s - %-6i - %-05c - %0-----010p - %10u - %0000-0009x\n", str, nb, c, &c, u_nb, nb);
+// // 	//res2 = printf("Real Printf test  - %010s - %-6i - %-05c - %0----010p - %10u - %0000-00009x\n", str, nb, c, &c, u_nb, nb);
 
-// 	//printf("Test flag : %-10d\n", nb);
- 	 //res = ft_printf("Mine %-2.2d\n", 0);
- 	 //res2 = printf  ("Real %-2.2d\n", 0);
+// // 	//printf("Test flag : %-10d\n", nb);
+//  	 //res = ft_printf("Mine %-2.2d\n", 0);
+//  	 //res2 = printf  ("Real %-2.2d\n", 0);
 
-	// res = ft_printf("Mine %*.s %.1s\n", 10, "123", "4567");
-	// res2 = printf  ("Real %*.s %.1s\n", 10, "123", "4567");
+// 	// res = ft_printf("Mine %*.s %.1s\n", 10, "123", "4567");
+// 	// res2 = printf  ("Real %*.s %.1s\n", 10, "123", "4567");
 
-	// res = ft_printf("Mine %*.0s %.2s\n", 10, "123", "4567");
-	// res2 = printf  ("Real %*.0s %.2s\n", 10, "123", "4567");
+// 	// res = ft_printf("Mine %*.0s %.2s\n", 10, "123", "4567");
+// 	// res2 = printf  ("Real %*.0s %.2s\n", 10, "123", "4567");
 
-	// res = ft_printf("Mine %*.3s %.3s\n", 10, "123", "4567");
-	// res2 = printf  ("Real %*.3s %.3s\n", 10, "123", "4567");
+// 	// res = ft_printf("Mine %*.3s %.3s\n", 10, "123", "4567");
+// 	// res2 = printf  ("Real %*.3s %.3s\n", 10, "123", "4567");
 
-	// res = ft_printf("Mine %*.4s %.4s\n", 10, "123", "4567");
-	// res2 = printf  ("Real %*.4s %.4s\n", 10, "123", "4567");
+// 	// res = ft_printf("Mine %*.4s %.4s\n", 10, "123", "4567");
+// 	// res2 = printf  ("Real %*.4s %.4s\n", 10, "123", "4567");
 
-	// res = ft_printf("Mine %*.4s %.*s\n", 10, "123", 5, "4567");
-	// res2 = printf  ("Real %*.4s %.*s\n", 10, "123", 5, "4567");
+// 	// res = ft_printf("Mine %10i %010i\n", 1, -1);
+// 	 //res2 = printf  ("Real %10i %010i\n", 1, -1);
 
-	res = ft_printf("Mine %-3.2x %10.2x\n", 1, -1);
-	res2 = printf  ("Real %-3.2x %10.2x\n", 1, -1);
+// 	res = ft_printf("Mine %*d\n", -4, -12);
+// 	res2 = printf  ("Real %*d\n", -4, -12);
 
-	// printf("Res = %i\n", res);
-	// printf("Res2 = %i\n", res2);
-	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
- 	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
+
+// 	// printf("Res = %i\n", res);
+// 	// printf("Res2 = %i\n", res2);
+// 	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+// 	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
+//  	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
 	
- 	printf("Res = %i\n", res);
-	printf("Res2 = %i", res2);
- }
+//  	printf("Res = %i\n", res);
+// 	printf("Res2 = %i", res2);
+//  }

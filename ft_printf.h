@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:40:28 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/22 12:53:47 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 15:46:58 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	ft_putchar(char c, int *count);
 void	ft_putnbr(int n, int *count);
 void	ft_putstr(char *str, int *count);
 char	*ft_itoh(unsigned long nbr);
-char	*ft_itoh2(unsigned long long nbr, int is_min);
+char	*ft_itoh2(unsigned long nbr, int is_min);
 int		nbr_length(int nbr);
+int		u_nbr_length(unsigned long nbr);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_atoi(char *nptr);
 int		ft_strlen(const char *s);
@@ -47,8 +48,8 @@ void	to_pointer_address(va_list list, int *count, t_struct flags);
 void	to_string(va_list list, int *count, t_struct flags);
 void	ft_fill_space(char c, int size, int *count);
 int		nbr_length_hexa(unsigned long nbr);
-void	operands_dot(t_struct flags, int *count, int arg, int argc_length);
-void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length);
+void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print);
+void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print);
 void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length);
 void	ft_unsigned_putnbr(unsigned int n, int *count);
 void	operands_string_dot(t_struct flags, int *count);
