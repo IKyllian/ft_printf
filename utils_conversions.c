@@ -14,20 +14,23 @@
 
 int		check_space_is_neg(t_struct *flags)
 {
+	int is_space_number;
+
+	is_space_number = 0;
+	if (flags->spaces_number < 0)
+	{
+		if (!flags->has_dot)
+			flags->has_negative = 1;
+		flags->spaces_number *= -1;
+		is_space_number = 1;
+	}
 	if (flags->dot_value < 0)
 	{
 		flags->has_negative = 1;
 		flags->dot_value *= -1;
-		return (0);
 	}
-	else if (flags->has_multiple < 0)
-	{
-		//if (flags->has_negative == 0)
-		if (!flags->has_dot)
-			flags->has_negative = 1;
-		flags->has_multiple *= -1;
+	if (is_space_number)
 		return (1);
-	}
 	else
 		return (0);
 }
@@ -44,10 +47,10 @@ void	to_string(va_list list, int *count, t_struct flags)
 		flags.dot_value *= -1;
 		space_is_neg = 1;
 	}
-	if (flags.has_multiple < 0)
+	if (flags.spaces_number < 0)
 	{
 		flags.has_negative = 1;
-		flags.has_multiple *= -1;
+		flags.spaces_number *= -1;
 		space_is_neg = 1;
 	}
 	str = va_arg(list, char *);
@@ -56,7 +59,7 @@ void	to_string(va_list list, int *count, t_struct flags)
 	operands_string_dot(flags, count);
 	operands_spaces_string_prefix(flags, count, str);
 	print_string(flags, count, str, space_is_neg);
-	operands_spaces_string_suffix(flags, count, str);
+	operands_spaces_string_suffix(flags, count, str, space_is_neg);
 }
 
 void	to_decimal(va_list list, int *count, t_struct flags)
@@ -66,11 +69,11 @@ void	to_decimal(va_list list, int *count, t_struct flags)
 	
 	neg_is_print = 0;
 	nbr = va_arg(list, int);
-	if (nbr == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
 	operands_dot(flags, count, nbr, nbr_length(nbr), &neg_is_print);
 	operands_spaces_prefix(flags, count, nbr, nbr_length(nbr), &neg_is_print);
-	if (nbr == 0 && flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.dot_value && !flags.spaces_number)
 		ft_putchar(' ', count);
 	else
 		ft_putnbr(nbr, count);
@@ -84,11 +87,11 @@ void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 
 	neg_is_print = 1;
 	nbr = (unsigned int)va_arg(list, int);
-	if (nbr == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
 	operands_dot(flags, count, 1, u_nbr_length(nbr), &neg_is_print);
 	operands_spaces_prefix(flags, count, 1, u_nbr_length(nbr), &neg_is_print);
-	if (nbr == 0 && flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.dot_value && !flags.spaces_number)
 		ft_putchar(' ', count);
 	else
 		ft_unsigned_putnbr(nbr, count);
@@ -102,11 +105,11 @@ void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 
 	neg_is_print = 1;
 	nbr = (unsigned int)va_arg(list, int);
-	if (nbr == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
 	operands_dot(flags, count, 1, nbr_length_hexa(nbr), &neg_is_print);
 	operands_spaces_prefix(flags, count, 1, nbr_length_hexa(nbr), &neg_is_print);
-	if (nbr == 0 && flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.dot_value && !flags.spaces_number)
 		ft_putchar(' ', count);
 	else
 		ft_putstr(ft_itoh2(nbr, is_min), count);
@@ -121,7 +124,7 @@ void	to_character(va_list list, int *count, t_struct flags)
 
 	neg_is_print = 1;
 	nbr = va_arg(list, int);
-	if (nbr == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
 	operands_dot(flags, count, 1, 1, &neg_is_print);
 	operands_spaces_prefix(flags, count, 1, 1, &neg_is_print);
@@ -136,7 +139,7 @@ void	to_pointer_address(va_list list, int *count, t_struct flags)
 
 	neg_is_print = 1;
 	input = (void *)va_arg(list, void *);
-	if ((unsigned long)input == 0 && flags.has_dot && !flags.dot_value && (!flags.spaces_number && !flags.has_multiple))
+	if ((unsigned long)input == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
 	operands_dot(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2, &neg_is_print);
 	operands_spaces_prefix(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2, &neg_is_print);
