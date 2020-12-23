@@ -12,12 +12,32 @@
 
 #include "ft_printf.h"
 
+int		check_space_is_neg(t_struct *flags)
+{
+	if (flags->dot_value < 0)
+	{
+		flags->has_negative = 1;
+		flags->dot_value *= -1;
+		return (0);
+	}
+	else if (flags->has_multiple < 0)
+	{
+		//if (flags->has_negative == 0)
+		if (!flags->has_dot)
+			flags->has_negative = 1;
+		flags->has_multiple *= -1;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 void	to_string(va_list list, int *count, t_struct flags)
 {
 	char *str;
 	int space_is_neg;
 
-	space_is_neg = 0;
+	space_is_neg = check_space_is_neg(&flags);
 	if (flags.dot_value < 0)
 	{
 		flags.has_negative = 1;

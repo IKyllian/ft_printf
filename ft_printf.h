@@ -56,5 +56,6 @@ void	operands_string_dot(t_struct flags, int *count);
 void	operands_spaces_string_prefix(t_struct flags, int *count, char *str);
 void	operands_spaces_string_suffix(t_struct flags, int *count, char *str);
 void	print_string(t_struct flags, int *count, char *str, int space_is_neg);
+int		check_space_is_neg(t_struct *flags);
 
 #endif
