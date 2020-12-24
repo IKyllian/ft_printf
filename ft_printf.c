@@ -16,10 +16,11 @@ void	struct_initialize(t_struct *flags)
 {
 	flags->has_negative = 0;
 	flags->spaces_number = 0;
+	flags->spaces_is_neg = 0;
 	flags->has_dot = 0;
 	flags->dot_value = 0;
 	flags->has_zero = 0;
-	//flags->has_multiple = 0;
+	flags->has_multiple = 0;
 }
 
 int		is_conversions(char c)
@@ -63,16 +64,23 @@ t_struct	check_prefix(char **str, va_list list)
 				(*str)++;
 			}
 			else
+			{
 				flags.spaces_number = nb;
+				flags.has_multiple = 1;
+			}
 		}
 		if (*(*str) >= 48 && *(*str) <= 57)
 		{
 			while ((*str)[i] && ((*str)[i] >= 48 && (*str)[i] <= 57))
 				i++;
+			if (*(*str - 1) == '-' && *(*str - 2) == '.')
+				i++;
 			nb_spaces = malloc(sizeof(char) * (i + 1));
 			//if (!(nb_spaces = malloc(sizeof(char) * (i + 1))))
 			//	return (NULL);
 			i = 0;
+			if (*(*str - 1) == '-' && *(*str - 2) == '.')
+				nb_spaces[i++] = '-';
 			while (*(*str) && (*(*str) >= 48 && *(*str) <= 57))
 			{
 				nb_spaces[i++] = *(*str);
@@ -116,7 +124,7 @@ void	ft_display(char **str, va_list list, int *count)
 	else if (*(*str) == 'c')
 		to_character(list, count, flags);
 	else if (*(*str) == '%')
-		ft_putchar('%', count);
+		to_percent(count, flags);
 	else if (*(*str) == 'p')
 		to_pointer_address(list, count, flags);
 }
@@ -181,8 +189,14 @@ int		ft_printf(const char *format, ...)
 	//res = ft_printf("Mine %0*d\n", -4, -12);
 	//res2 = printf  ("Real %0*d\n", -4, -12);
 
-	res = ft_printf("Mine %*.*s\n", 1, -2, "0");
-	res2 = printf  ("Real %*.*s\n", 1, -2, "0");
+	// res = ft_printf("Mine %*.*s\n", 1, -2, "0");
+	// res2 = printf  ("Real %*.*s\n", 1, -2, "0");
+
+	res = ft_printf("Mine %-20.s----%-20.s\n", "Test", NULL);
+	res2 = printf  ("Real %-20.s----%-20.s\n", "Test", NULL);
+
+	//res = ft_printf("Mine %10.s -%02.s\n", "123", "4567");
+	//res2 = printf  ("Real %10.s -%02.s\n", "123", "4567");
 
 	//res = ft_printf("Mine *%-*.*i* *%*.*i*\n",4, 5, 10, 10, 21, -10);
 	//res2 = printf  ("Real *%-*.*i* *%*.*i*\n", 4, 5, 10, 10, 21, -10);

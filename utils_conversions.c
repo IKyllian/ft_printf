@@ -12,54 +12,35 @@
 
 #include "ft_printf.h"
 
-int		check_space_is_neg(t_struct *flags)
+void		check_space_is_neg(t_struct *flags)
 {
-	int is_space_number;
-
-	is_space_number = 0;
 	if (flags->spaces_number < 0)
 	{
+		
 		if (!flags->has_dot)
 			flags->has_negative = 1;
 		flags->spaces_number *= -1;
-		is_space_number = 1;
+		flags->spaces_is_neg = 1;
 	}
 	if (flags->dot_value < 0)
 	{
 		flags->has_negative = 1;
 		flags->dot_value *= -1;
 	}
-	if (is_space_number)
-		return (1);
-	else
-		return (0);
 }
 
 void	to_string(va_list list, int *count, t_struct flags)
 {
 	char *str;
-	int space_is_neg;
 
-	space_is_neg = check_space_is_neg(&flags);
-	if (flags.dot_value < 0)
-	{
-		flags.has_negative = 1;
-		flags.dot_value *= -1;
-		space_is_neg = 1;
-	}
-	if (flags.spaces_number < 0)
-	{
-		flags.has_negative = 1;
-		flags.spaces_number *= -1;
-		space_is_neg = 1;
-	}
+	check_space_is_neg(&flags);
 	str = va_arg(list, char *);
 	if (!str)
 		str = "(null)";
-	operands_string_dot(flags, count);
+	operands_string_dot(flags, count, str);
 	operands_spaces_string_prefix(flags, count, str);
-	print_string(flags, count, str, space_is_neg);
-	operands_spaces_string_suffix(flags, count, str, space_is_neg);
+	print_string(flags, count, str);
+	operands_spaces_string_suffix(flags, count, str);
 }
 
 void	to_decimal(va_list list, int *count, t_struct flags)
@@ -67,6 +48,7 @@ void	to_decimal(va_list list, int *count, t_struct flags)
 	int nbr;
 	int neg_is_print;
 	
+	check_space_is_neg(&flags);
 	neg_is_print = 0;
 	nbr = va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
@@ -85,6 +67,7 @@ void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 	unsigned long	nbr;
 	int neg_is_print;
 
+	check_space_is_neg(&flags);
 	neg_is_print = 1;
 	nbr = (unsigned int)va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
@@ -103,6 +86,7 @@ void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 	unsigned long nbr;
 	int neg_is_print;
 
+	check_space_is_neg(&flags);
 	neg_is_print = 1;
 	nbr = (unsigned int)va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
@@ -122,6 +106,7 @@ void	to_character(va_list list, int *count, t_struct flags)
 	int	nbr;
 	int neg_is_print;
 
+	check_space_is_neg(&flags);
 	neg_is_print = 1;
 	nbr = va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
@@ -137,6 +122,7 @@ void	to_pointer_address(va_list list, int *count, t_struct flags)
 	void *input;
 	int neg_is_print;
 
+	check_space_is_neg(&flags);
 	neg_is_print = 1;
 	input = (void *)va_arg(list, void *);
 	if ((unsigned long)input == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
@@ -145,4 +131,18 @@ void	to_pointer_address(va_list list, int *count, t_struct flags)
 	operands_spaces_prefix(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2, &neg_is_print);
 	ft_putstr(ft_itoh((unsigned long)input), count);
 	operands_spaces_suffix(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2);
+}
+
+void	to_percent(int *count, t_struct flags)
+{
+	int neg_is_print;
+
+	check_space_is_neg(&flags);
+	neg_is_print = 1;
+	//if (flags.has_dot && !flags.dot_value && !flags.spaces_number)
+	//	return ;
+	operands_dot(flags, count, 1, 1, &neg_is_print);
+	operands_spaces_prefix(flags, count, 1, 1, &neg_is_print);
+	ft_putchar('%', count);
+	operands_spaces_suffix(flags, count, 1, 1);
 }

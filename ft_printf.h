@@ -24,9 +24,10 @@ typedef struct	s_struct
 	int 		has_negative;
 	int 		has_zero;
 	int 		spaces_number;
+	int 		spaces_is_neg;
 	int 		has_dot;
 	int 		dot_value;
-	//int 		has_multiple;
+	int			has_multiple;
 }				t_struct;
 
 int		ft_printf(const char *format, ...);
@@ -52,10 +53,11 @@ void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg
 void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print);
 void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length);
 void	ft_unsigned_putnbr(unsigned int n, int *count);
-void	operands_string_dot(t_struct flags, int *count);
+void	operands_string_dot(t_struct flags, int *count, char *str);
 void	operands_spaces_string_prefix(t_struct flags, int *count, char *str);
-void	operands_spaces_string_suffix(t_struct flags, int *count, char *str, int space_is_neg);
-void	print_string(t_struct flags, int *count, char *str, int space_is_neg);
-int		check_space_is_neg(t_struct *flags);
+void	operands_spaces_string_suffix(t_struct flags, int *count, char *str);
+void	print_string(t_struct flags, int *count, char *str);
+void	check_space_is_neg(t_struct *flags);
+void	to_percent(int *count, t_struct flags);
 
 #endif

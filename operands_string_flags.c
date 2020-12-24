@@ -12,39 +12,49 @@
 
 #include "ft_printf.h"
 
-void	operands_string_dot(t_struct flags, int *count)
+void	operands_string_dot(t_struct flags, int *count, char *str)
 {
-	if (flags.dot_value && !flags.has_negative)// && flags.dot_value > flags.spaces_number)
+	
+	if (flags.dot_value && !flags.has_negative)
 	{
 		if (flags.has_zero && !flags.has_negative)
-			ft_fill_space('0', (flags.dot_value - flags.spaces_number), count);
+		{
+			if (flags.spaces_number < ft_strlen(str) && !flags.spaces_is_neg)
+				ft_fill_space('0', (flags.dot_value - flags.spaces_number), count);
+			else
+				ft_fill_space('0', (flags.dot_value - ft_strlen(str)), count);
+		}
 		else if (!flags.has_negative)
-			ft_fill_space(' ', (flags.dot_value - flags.spaces_number), count);
+		{
+			if (flags.spaces_number < ft_strlen(str) && !flags.spaces_is_neg)
+				ft_fill_space(' ', (flags.dot_value - flags.spaces_number), count);
+			else
+				ft_fill_space(' ', (flags.dot_value - ft_strlen(str)), count);
+		}
 	}
 }
 
 void	operands_spaces_string_prefix(t_struct flags, int *count, char *str)
 {
-
-	if (flags.spaces_number && !flags.has_negative)
+	
+	if (flags.spaces_number && !flags.has_negative && !flags.has_dot)
 	{
-		if (!(flags.has_dot && !flags.dot_value))
-		{
 			if (flags.has_zero)
 				ft_fill_space('0', (flags.spaces_number - ft_strlen(str)), count);
 			else
 				ft_fill_space(' ', (flags.spaces_number - ft_strlen(str)), count);
-		}
 	}
 }
 
-void	operands_spaces_string_suffix(t_struct flags, int *count, char *str, int space_is_neg)
+void	operands_spaces_string_suffix(t_struct flags, int *count, char *str)
 {
 	if (flags.has_negative && !flags.has_dot)
 		ft_fill_space(' ', (flags.spaces_number - ft_strlen(str)), count);
+	else if (flags.has_dot && flags.spaces_is_neg && !flags.has_multiple)
+		ft_fill_space(' ', (flags.spaces_number), count);
 	else if (flags.has_negative && flags.dot_value)
 	{
-		if (space_is_neg)
+		if (flags.spaces_is_neg)
 			ft_fill_space(' ', (flags.dot_value - ft_strlen(str)), count);
 		else if (flags.spaces_number >= ft_strlen(str))
 			ft_fill_space(' ', (flags.dot_value - ft_strlen(str)), count);
@@ -53,7 +63,7 @@ void	operands_spaces_string_suffix(t_struct flags, int *count, char *str, int sp
 	}
 }
 
-void	print_string(t_struct flags, int *count, char *str, int space_is_neg)
+void	print_string(t_struct flags, int *count, char *str)
 {
 	int i;
 	int size;
@@ -64,8 +74,10 @@ void	print_string(t_struct flags, int *count, char *str, int space_is_neg)
 	{
 		if (flags.spaces_number)
 		{
-			if (space_is_neg)
+			if (flags.spaces_is_neg && flags.has_multiple)
 				size = ft_strlen(str);
+			else if (flags.spaces_is_neg && !flags.has_multiple)
+				size = 0;
 			else
 				size = flags.spaces_number;
 		}

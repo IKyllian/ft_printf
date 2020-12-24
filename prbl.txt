@@ -4,3 +4,4 @@ Ajouté ft_ a tous les noms de fichiers
 "Mine %.-4d\n",  -12
 "Mine %.*d\n", -4, -12
 Penser a tout free
+gerer flags %%

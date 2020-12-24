@@ -14,16 +14,13 @@
 
 void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print)
 {
-	int space_is_neg;
-
-	space_is_neg = check_space_is_neg(&flags);
-	if (flags.has_dot && (!flags.has_negative || (!flags.has_negative && space_is_neg)) )
+	if (flags.has_dot && (!flags.has_negative || (!flags.has_negative && flags.spaces_is_neg)) )
 	{
 		if (arg < 0)
 				flags.dot_value -= 1;
-		if (flags.dot_value >= flags.spaces_number && !space_is_neg)
+		if (flags.dot_value >= flags.spaces_number && !flags.spaces_is_neg)
 		{
-			if (flags.spaces_number >= argc_length && !space_is_neg)
+			if (flags.spaces_number >= argc_length && !flags.spaces_is_neg)
 			{
 				if ((flags.dot_value - flags.spaces_number) > 0)
 					ft_fill_space(' ', (flags.dot_value - flags.spaces_number), count);
@@ -31,9 +28,9 @@ void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg
 			else if ( flags.dot_value - argc_length > 0)
 				ft_fill_space(' ', (flags.dot_value - argc_length), count);
 		}
-		else if (space_is_neg && flags.dot_value - argc_length > 0 && !flags.has_zero)
+		else if (flags.spaces_is_neg && flags.dot_value - argc_length > 0 && !flags.has_zero)
 			ft_fill_space(' ', (flags.dot_value - argc_length), count);
-		else if (space_is_neg && flags.dot_value - argc_length > 0 && flags.has_zero)
+		else if (flags.spaces_is_neg && flags.dot_value - argc_length > 0 && flags.has_zero)
 		{
 			if (arg < 0)
 			{
@@ -63,18 +60,15 @@ void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg
 
 void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print)
 {
-	int space_is_neg;
-
-	space_is_neg = check_space_is_neg(&flags);
-	if ((flags.spaces_number && !flags.has_negative && flags.spaces_number > argc_length && !space_is_neg)
-			|| (flags.spaces_number && flags.has_negative && flags.has_dot && !space_is_neg))
+	if ((flags.spaces_number && !flags.has_negative && flags.spaces_number > argc_length && !flags.spaces_is_neg)
+			|| (flags.spaces_number && flags.has_negative && flags.has_dot && !flags.spaces_is_neg))
 	{
 		if (arg < 0)
 		{
 			if (!flags.has_dot)
 				flags.spaces_number -= 1;
 		}
-		if ((flags.has_zero && !flags.has_negative) || flags.has_dot )
+		if ((flags.has_zero && !flags.has_negative && !flags.spaces_is_neg) || (flags.has_dot && !flags.spaces_is_neg))
 		{
 			if (arg < 0 && !*neg_is_print)
 			{
@@ -94,9 +88,6 @@ void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length
 
 void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length)
 {
-	int space_is_neg;
-
-	space_is_neg = check_space_is_neg(&flags);
 	if (flags.has_negative && !flags.has_dot)
 	{
 		if (arg < 0)
@@ -105,7 +96,7 @@ void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length
 	}
 	else if (flags.has_negative && flags.dot_value)
 	{
-		if (space_is_neg)
+		if (flags.spaces_is_neg)
 		{
 			if (arg < 0)
 				flags.dot_value -= 1;
@@ -120,5 +111,11 @@ void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length
 			if ((flags.dot_value - flags.spaces_number) > 0)
 				ft_fill_space(' ', (flags.dot_value - flags.spaces_number), count);
 		}
+	}
+	else if (flags.has_dot && flags.spaces_is_neg && !flags.has_multiple)
+	{
+		if (arg < 0)
+				flags.spaces_number -= 1;
+			ft_fill_space(' ', (flags.spaces_number - argc_length), count);
 	}
 }
