@@ -33,31 +33,34 @@ typedef struct	s_struct
 int		ft_printf(const char *format, ...);
 void	ft_putchar(char c, int *count);
 void	ft_putnbr(int n, int *count);
+void	ft_unsigned_putnbr(unsigned int n, int *count);
 void	ft_putstr(char *str, int *count);
-char	*ft_itoh(unsigned long nbr);
-char	*ft_itoh2(unsigned long nbr, int is_min);
+void	ft_print_itoh(unsigned long nbr, int is_min, int is_address, int *count);
 int		nbr_length(int nbr);
-int		u_nbr_length(unsigned long nbr);
-char	*ft_strjoin(char *s1, char *s2);
+int		u_nbr_length(unsigned long nbr, unsigned int size_base);
 int		ft_atoi(char *nptr);
 int		ft_strlen(const char *s);
+
 void	to_decimal(va_list list, int *count, t_struct flags);
 void	to_unsigned_decimal(va_list list, int *count, t_struct flags);
 void	to_hexa(va_list list, int *count, int is_min, t_struct flags);
 void	to_character(va_list list, int *count, t_struct flags);
 void	to_pointer_address(va_list list, int *count, t_struct flags);
 void	to_string(va_list list, int *count, t_struct flags);
+void	to_percent(int *count, t_struct flags);
+
 void	ft_fill_space(char c, int size, int *count);
-int		nbr_length_hexa(unsigned long nbr);
+
 void	operands_dot(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print);
 void	operands_spaces_prefix(t_struct flags, int *count, int arg, int argc_length, int *neg_is_print);
 void	operands_spaces_suffix(t_struct flags, int *count, int arg, int argc_length);
-void	ft_unsigned_putnbr(unsigned int n, int *count);
+void	print_neg(int arg, int *neg_is_print, int *count);
+
 void	operands_string_dot(t_struct flags, int *count, char *str);
 void	operands_spaces_string_prefix(t_struct flags, int *count, char *str);
 void	operands_spaces_string_suffix(t_struct flags, int *count, char *str);
 void	print_string(t_struct flags, int *count, char *str);
+
 void	check_space_is_neg(t_struct *flags);
-void	to_percent(int *count, t_struct flags);
 
 #endif

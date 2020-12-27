@@ -72,13 +72,13 @@ void	to_unsigned_decimal(va_list list, int *count, t_struct flags)
 	nbr = (unsigned int)va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
-	operands_dot(flags, count, 1, u_nbr_length(nbr), &neg_is_print);
-	operands_spaces_prefix(flags, count, 1, u_nbr_length(nbr), &neg_is_print);
+	operands_dot(flags, count, 1, u_nbr_length(nbr, 10), &neg_is_print);
+	operands_spaces_prefix(flags, count, 1, u_nbr_length(nbr, 10), &neg_is_print);
 	if (nbr == 0 && flags.dot_value && !flags.spaces_number)
 		ft_putchar(' ', count);
 	else
 		ft_unsigned_putnbr(nbr, count);
-	operands_spaces_suffix(flags, count, 1, u_nbr_length(nbr));
+	operands_spaces_suffix(flags, count, 1, u_nbr_length(nbr, 10));
 }
 
 void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
@@ -91,13 +91,13 @@ void	to_hexa(va_list list, int *count, int is_min, t_struct flags)
 	nbr = (unsigned int)va_arg(list, int);
 	if (nbr == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
-	operands_dot(flags, count, 1, nbr_length_hexa(nbr), &neg_is_print);
-	operands_spaces_prefix(flags, count, 1, nbr_length_hexa(nbr), &neg_is_print);
+	operands_dot(flags, count, 1, u_nbr_length(nbr, 16), &neg_is_print);
+	operands_spaces_prefix(flags, count, 1, u_nbr_length(nbr, 16), &neg_is_print);
 	if (nbr == 0 && flags.dot_value && !flags.spaces_number)
 		ft_putchar(' ', count);
 	else
-		ft_putstr(ft_itoh2(nbr, is_min), count);
-	operands_spaces_suffix(flags, count, 1, nbr_length_hexa(nbr));
+		ft_print_itoh(nbr, is_min, 0, count);
+	operands_spaces_suffix(flags, count, 1, u_nbr_length(nbr, 16));
 
 }
 
@@ -127,10 +127,10 @@ void	to_pointer_address(va_list list, int *count, t_struct flags)
 	input = (void *)va_arg(list, void *);
 	if ((unsigned long)input == 0 && flags.has_dot && !flags.dot_value && !flags.spaces_number)
 		return ;
-	operands_dot(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2, &neg_is_print);
-	operands_spaces_prefix(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2, &neg_is_print);
-	ft_putstr(ft_itoh((unsigned long)input), count);
-	operands_spaces_suffix(flags, count, 1, nbr_length_hexa((unsigned long)input) + 2);
+	operands_dot(flags, count, 1, u_nbr_length((unsigned long)input, 16) + 2, &neg_is_print);
+	operands_spaces_prefix(flags, count, 1, u_nbr_length((unsigned long)input, 16) + 2, &neg_is_print);
+	ft_print_itoh((unsigned long)input, 1, 1, count);
+	operands_spaces_suffix(flags, count, 1, u_nbr_length((unsigned long)input, 16) + 2);
 }
 
 void	to_percent(int *count, t_struct flags)

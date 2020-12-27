@@ -29,42 +29,34 @@ int		nbr_length(int nbr)
 	return (++length);
 }
 
-int		u_nbr_length(unsigned long nbr)
+int		u_nbr_length(unsigned long nbr, unsigned int size_base)
 {
 	int			length;
 
 	length = 0;
-	while (nbr >= 10)
+	while (nbr >= size_base)
 	{
 		length++;
-		nbr /= 10;
+		nbr /= size_base;
 	}
 	return (++length);
 }
 
-int		nbr_length_hexa(unsigned long nbr)
-{
-	int length;
-
-	length = 0;
-	while (nbr >= 16)
-	{
-		length++;
-		nbr /= 16;
-	}
-	return (++length);
-}
-
-char	*ft_itoh(unsigned long nbr)
+void	ft_print_itoh(unsigned long nbr, int is_min, int is_address, int *count)
 {
 	char	*str;
 	int		i;
 	char	*base;
 
-	i = nbr_length_hexa(nbr) + 2;
-	base = "0123456789abcdef";
-	if (!(str = malloc(sizeof(char) * (nbr_length_hexa(nbr) + 3))))
-		return (NULL);
+	i = u_nbr_length(nbr, 16);
+	if (is_address)
+		i += 2;
+	if (is_min)
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	if (!(str = malloc(sizeof(char) * (u_nbr_length(nbr, 16) + 1))))
+		return ;
 	str[i--] = 0;
 	if (nbr == 0)
 		str[i--] = '0';
@@ -73,7 +65,11 @@ char	*ft_itoh(unsigned long nbr)
 		str[i--] = base[nbr % 16];
 		nbr /= 16;
 	}
-	str[i--] = 'x';
-	str[i] = '0';
-	return (str);
+	if (is_address)
+	{
+		str[i--] = 'x';
+		str[i] = '0';
+	}
+	ft_putstr(str, count);
+	free(str);
 }
