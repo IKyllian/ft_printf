@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/22 14:56:44 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/28 11:54:49 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		nbr_length(int nbr)
 	return (++length);
 }
 
-int		u_nbr_length(unsigned long nbr, unsigned int size_base)
+int		u_nbr_len(unsigned long nbr, unsigned int size_base)
 {
 	int			length;
 
@@ -42,20 +42,25 @@ int		u_nbr_length(unsigned long nbr, unsigned int size_base)
 	return (++length);
 }
 
-void	ft_print_itoh(unsigned long nbr, int is_min, int is_address, int *count)
+char	*select_base(int is_min)
+{
+	if (is_min)
+		return ("0123456789abcdef");
+	else
+		return ("0123456789ABCDEF");
+}
+
+void	ft_itoh(unsigned long nbr, int low, int is_adrs, int *count)
 {
 	char	*str;
 	int		i;
 	char	*base;
 
-	i = u_nbr_length(nbr, 16);
-	if (is_address)
+	i = u_nbr_len(nbr, 16);
+	if (is_adrs)
 		i += 2;
-	if (is_min)
-		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
-	if (!(str = malloc(sizeof(char) * (u_nbr_length(nbr, 16) + 1))))
+	base = select_base(low);
+	if (!(str = malloc(sizeof(char) * (u_nbr_len(nbr, 16) + 1))))
 		return ;
 	str[i--] = 0;
 	if (nbr == 0)
@@ -65,7 +70,7 @@ void	ft_print_itoh(unsigned long nbr, int is_min, int is_address, int *count)
 		str[i--] = base[nbr % 16];
 		nbr /= 16;
 	}
-	if (is_address)
+	if (is_adrs)
 	{
 		str[i--] = 'x';
 		str[i] = '0';

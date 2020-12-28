@@ -1,0 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_operands_flags.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/22 12:08:29 by kdelport          #+#    #+#             */
+/*   Updated: 2020/12/28 13:07:41 by kdelport         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+void	print_neg(int arg, int *count, t_flags *flags)
+{
+	if (arg < 0 && !flags->neg_print)
+	{
+		ft_putchar('-', count);
+		flags->neg_print = 1;
+	}
+}
+
+void	ope_dot(t_flags *f, int *count, int arg, int len)
+{
+	if (f->has_dot && (!f->has_neg || (!f->has_neg && f->len_is_neg)))
+	{
+		if (arg < 0)
+			f->dot_val -= 1;
+		if (f->dot_val >= f->len_field && !f->len_is_neg)
+		{
+			if (f->len_field >= len)
+			{
+				if ((f->dot_val - f->len_field) > 0)
+					fill_space(' ', (f->dot_val - f->len_field), count);
+			}
+			else if (f->dot_val - len > 0)
+				fill_space(' ', (f->dot_val - len), count);
+		}
+		else if (f->len_is_neg && (f->dot_val - len > 0) &&
+			!f->has_zero)
+			fill_space(' ', (f->dot_val - len), count);
+		else if (f->len_is_neg && (f->dot_val - len > 0) &&
+				f->has_zero)
+		{
+			print_neg(arg, count, f);
+			fill_space('0', (f->dot_val - len), count);
+		}
+		print_neg(arg, count, f);
+	}
+}
+
+void	ope_space(t_flags *flags, int *count, int arg, int len)
+{
+	if ((flags->len_field && !flags->has_neg && flags->len_field > len &&
+		!flags->len_is_neg) || (flags->len_field && flags->has_neg &&
+		flags->has_dot && !flags->len_is_neg))
+	{
+		if (arg < 0)
+			!flags->has_dot ? flags->len_field -= 1 : flags->len_field;
+		if ((flags->has_zero && !flags->has_neg && !flags->len_is_neg) ||
+			(flags->has_dot && !flags->len_is_neg))
+		{
+			if (arg < 0 && !flags->neg_print)
+			{
+				ft_putchar('-', count);
+				flags->neg_print = 1;
+			}
+			fill_space('0', (flags->len_field - len), count);
+		}
+		else if (!flags->has_neg)
+			fill_space(' ', (flags->len_field - len), count);
+		if (arg < 0 && !flags->has_zero && !flags->neg_print)
+			ft_putchar('-', count);
+	}
+	else if (arg < 0 && !(flags->neg_print))
+		ft_putchar('-', count);
+}
+
+void	ope_space_suff(t_flags *flags, int *count, int arg, int len)
+{
+	if (flags->has_neg && !flags->has_dot)
+	{
+		arg < 0 ? flags->len_field -= 1 : flags->len_field;
+		fill_space(' ', (flags->len_field - len), count);
+	}
+	else if (flags->has_dot && flags->len_is_neg && !flags->has_star)
+	{
+		arg < 0 ? flags->len_field -= 1 : flags->len_field;
+		fill_space(' ', (flags->len_field - len), count);
+	}
+	else if (flags->has_neg && flags->dot_val)
+	{
+		if (arg < 0)
+			flags->dot_val -= 1;
+		if (flags->len_is_neg)
+			fill_space(' ', (flags->dot_val - len), count);
+		else
+		{
+			if (flags->len_field < len)
+				flags->len_field = len;
+			if ((flags->dot_val - flags->len_field) > 0)
+				fill_space(' ', (flags->dot_val - flags->len_field), count);
+		}
+	}
+}
