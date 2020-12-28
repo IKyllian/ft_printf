@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 12:38:42 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/28 15:03:34 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ft_display(char **str, va_list list, int *count)
 	struct_initialize(&flags);
 	if (!is_conversions(*(*str)))
 		check_prefix(str, &flags, list);
+	flags.type = *(*str);
 	if (*(*str) == 's')
 		to_string(list, count, flags);
 	else if (*(*str) == 'd' || *(*str) == 'i')

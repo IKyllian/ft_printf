@@ -6,18 +6,26 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 12:08:29 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 13:07:41 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/28 16:30:19 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_neg(int arg, int *count, t_flags *flags)
+void	print_neg(int arg, int *count, t_flags *flags, int arg_len)
 {
-	if (arg < 0 && !flags->neg_print)
+	if (arg < 0 && !flags->neg_print &&
+		(flags->type == 'i' || flags->type == 'd'))
 	{
 		ft_putchar('-', count);
 		flags->neg_print = 1;
+	}
+	else if (!flags->neg_print && flags->type == 'p')
+	{
+		ft_putstr("0x", count);
+		flags->neg_print = 1;
+		if (flags->has_dot && flags->len_field > arg_len && !flags->len_is_neg)
+			flags->len_field += 2;
 	}
 }
 
@@ -43,10 +51,10 @@ void	ope_dot(t_flags *f, int *count, int arg, int len)
 		else if (f->len_is_neg && (f->dot_val - len > 0) &&
 				f->has_zero)
 		{
-			print_neg(arg, count, f);
+			print_neg(arg, count, f, len);
 			fill_space('0', (f->dot_val - len), count);
 		}
-		print_neg(arg, count, f);
+		print_neg(arg, count, f, len);
 	}
 }
 
@@ -61,20 +69,16 @@ void	ope_space(t_flags *flags, int *count, int arg, int len)
 		if ((flags->has_zero && !flags->has_neg && !flags->len_is_neg) ||
 			(flags->has_dot && !flags->len_is_neg))
 		{
-			if (arg < 0 && !flags->neg_print)
-			{
-				ft_putchar('-', count);
-				flags->neg_print = 1;
-			}
+			print_neg(arg, count, flags, len);
 			fill_space('0', (flags->len_field - len), count);
 		}
 		else if (!flags->has_neg)
 			fill_space(' ', (flags->len_field - len), count);
 		if (arg < 0 && !flags->has_zero && !flags->neg_print)
-			ft_putchar('-', count);
+			print_neg(arg, count, flags, len);
 	}
 	else if (arg < 0 && !(flags->neg_print))
-		ft_putchar('-', count);
+		print_neg(arg, count, flags, len);
 }
 
 void	ope_space_suff(t_flags *flags, int *count, int arg, int len)

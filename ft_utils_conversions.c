@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 12:39:59 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/28 16:43:51 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	to_hexa(va_list list, int *count, int is_min, t_flags *flags)
 	if (nbr == 0 && flags->dot_val && !flags->len_field)
 		ft_putchar(' ', count);
 	else
-		ft_itoh(nbr, is_min, 0, count);
+		ft_itoh(nbr, is_min, count);
 	ope_space_suff(flags, count, 1, u_nbr_len(nbr, 16));
 }
 
@@ -90,6 +90,7 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 		return ;
 	ope_dot(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
 	ope_space(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
-	ft_itoh((unsigned long)input, 1, 1, count);
+	print_neg((unsigned long)input, count, flags, u_nbr_len((unsigned long)input, 16));
+	ft_itoh((unsigned long)input, 1, count);
 	ope_space_suff(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
 }

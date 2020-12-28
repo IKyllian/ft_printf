@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils2.c                                        :+:      :+:    :+:   */
+/*   ft_utils_and_conversions2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:37:48 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 12:39:48 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2020/12/28 15:03:01 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	struct_initialize(t_flags *flags)
 	flags->has_zero = 0;
 	flags->has_star = 0;
 	flags->neg_print = 0;
+	flags->type = 0;
 }
 
 void	check_space_is_neg(t_flags *flags)

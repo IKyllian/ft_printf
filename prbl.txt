@@ -1,7 +1,4 @@
-PFT Tester
-Check malloc pour la taille des nombres negatifs
-Ajouté ft_ a tous les noms de fichiers
-"Mine %.-4d\n",  -12
-"Mine %.*d\n", -4, -12
-Penser a tout free
-gerer flags %%
+
+%-10.20p
+%.4c
+%.4%
