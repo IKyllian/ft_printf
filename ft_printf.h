@@ -61,10 +61,10 @@ void			ope_space(t_flags *flags, int *c, int arg, int *len);
 void			ope_space_suff(t_flags *flags, int *count, int arg, int len);
 void			print_neg(int arg, int *count, t_flags *flags, int *arg_len);
 
-void			operands_string_dot(t_flags flags, int *count, char *str);
-void			ope_space_string(t_flags flags, int *count, char *str);
-void			ope_space_string_suff(t_flags flags, int *count, char *str);
-void			print_string(t_flags flags, int *count, char *str);
+void			operands_string_dot(t_flags flags, int *count, int len);
+void			ope_space_string(t_flags flags, int *count, int len);
+void			ope_space_string_suff(t_flags flags, int *count, int len);
+void			print_string(t_flags flags, int *count, char *str, int len);
 
 void			check_space_is_neg(t_flags *flags);
 

@@ -94,8 +94,8 @@ void	ope_space(t_flags *flags, int *count, int arg, int *len)
 		!flags->len_is_neg) || (flags->len_field && flags->has_neg &&
 		flags->has_dot && !flags->len_is_neg))
 	{
-		if (arg < 0)
-			!flags->has_dot ? flags->len_field -= 1 : flags->len_field;
+		if (arg < 0 && !flags->has_dot)
+			flags->len_field -= 1;
 		if ((flags->has_zero && !flags->has_neg && !flags->len_is_neg) ||
 			(flags->has_dot && !flags->len_is_neg))
 		{

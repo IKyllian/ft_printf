@@ -14,16 +14,18 @@
 
 void	to_string(va_list list, int *count, t_flags flags)
 {
-	char *str;
+	char	*str;
+	int		len;
 
 	check_space_is_neg(&flags);
 	str = va_arg(list, char *);
 	if (!str)
 		str = "(null)";
-	operands_string_dot(flags, count, str);
-	ope_space_string(flags, count, str);
-	print_string(flags, count, str);
-	ope_space_string_suff(flags, count, str);
+	len = ft_strlen(str);
+	operands_string_dot(flags, count, len);
+	ope_space_string(flags, count, len);
+	print_string(flags, count, str, len);
+	ope_space_string_suff(flags, count, len);
 }
 
 void	to_decimal(va_list list, int *count, t_flags *flags)

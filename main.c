@@ -45,33 +45,19 @@
 	//res2 = printf  ("%-*.*i-%-*.*u-%-*.*x-%-*.*X-%-*.*s-%-*.*p-\n", 5, -20, -42, 5, -20, -42, 5, -20, -42, 5, -20, -42, 5, -20, "Test", 5, -20, &res);
 
 
-	// res = ft_printf("%.50p\n", &res);
-	// res2 = printf  ("%.50p\n", &res);
+	// res = ft_printf("%-20.30p\n", &str);
+	// res2 = printf  ("%-20.30p\n", &str);
 
-	// res = ft_printf("%30.*p\n", 20, &res);
-	// res2 = printf  ("%30.*p\n", 20, &res);
-	
-	// res = ft_printf("%30.20p\n", &res);
-	// res2 = printf  ("%30.20p\n", &res);
-
-	res = ft_printf("%-20.-30p\n", NULL);
-	res2 = printf  ("%-20.-30p\n", NULL);
-
-	//  res = ft_printf("%-20.*p\n", -30, NULL);
-	//  res2 = printf  ("%-20.*p\n", -30, NULL);
+	//  res = ft_printf("%*.*p\n", -20, 30, NULL);
+	//  res2 = printf  ("%*.*p\n", -20, 30, NULL);
 
 	//0, -40, 0, 0, 89, NULL, NULL
 
-	//res = ft_printf("Mine %10.s -%02.s\n", "123", "4567");
-	//res2 = printf  ("Real %10.s -%02.s\n", "123", "4567");
-
-	//res = ft_printf("Mine *%-*.*i* *%*.*i*\n",4, 5, 10, 10, 21, -10);
-	//res2 = printf  ("Real *%-*.*i* *%*.*i*\n", 4, 5, 10, 10, 21, -10);
+	res = ft_printf("Mine %3.4c-%3.4%-%3.4s\n", 89, "T");
+	res2 = printf  ("Real %3.4c-%3.4%-%3.4s\n", 89, "T");
 
 	// printf("Res = %i\n", res);
 	// printf("Res2 = %i\n", res2);
-	// res = ft_printf("Mine 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
-	// res2 = printf  ("Real 0*%0-*.*d*0 0*%0*.*d*0\n", 2, 6, 102, 21, 10, -101);
  	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
  	printf("Res = %i\n", res);
 	printf("Res2 = %i", res2);
