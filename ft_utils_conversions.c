@@ -29,68 +29,78 @@ void	to_string(va_list list, int *count, t_flags flags)
 void	to_decimal(va_list list, int *count, t_flags *flags)
 {
 	int nbr;
+	int	arg_len;
 
 	check_space_is_neg(flags);
 	nbr = va_arg(list, int);
+	arg_len = nbr_length(nbr);
 	if (nbr == 0 && flags->has_dot && !flags->dot_val && !flags->len_field)
 		return ;
-	ope_dot(flags, count, nbr, nbr_length(nbr));
-	ope_space(flags, count, nbr, nbr_length(nbr));
-	if (nbr == 0 && flags->dot_val && !flags->len_field)
+	ope_dot(flags, count, nbr, &arg_len);
+	ope_space(flags, count, nbr, &arg_len);
+	if (nbr == 0 && ((flags->dot_val && !flags->len_field) ||
+		(flags->len_is_neg && !flags->has_star)))
 		ft_putchar(' ', count);
 	else
 		ft_putnbr(nbr, count);
-	ope_space_suff(flags, count, nbr, nbr_length(nbr));
+	ope_space_suff(flags, count, nbr, arg_len);
 }
 
 void	to_unsigned_decimal(va_list list, int *count, t_flags *flags)
 {
 	unsigned long	nbr;
+	int				arg_len;
 
 	check_space_is_neg(flags);
 	nbr = (unsigned int)va_arg(list, int);
+	arg_len = u_nbr_len(nbr, 10);
 	if (nbr == 0 && flags->has_dot && !flags->dot_val && !flags->len_field)
 		return ;
-	ope_dot(flags, count, 1, u_nbr_len(nbr, 10));
-	ope_space(flags, count, 1, u_nbr_len(nbr, 10));
-	if (nbr == 0 && flags->dot_val && !flags->len_field)
+	ope_dot(flags, count, 1, &arg_len);
+	ope_space(flags, count, 1, &arg_len);
+	if (nbr == 0 && ((flags->dot_val && !flags->len_field) ||
+		(flags->len_is_neg && !flags->has_star)))
 		ft_putchar(' ', count);
 	else
 		ft_unsigned_putnbr(nbr, count);
-	ope_space_suff(flags, count, 1, u_nbr_len(nbr, 10));
+	ope_space_suff(flags, count, 1, arg_len);
 }
 
 void	to_hexa(va_list list, int *count, int is_min, t_flags *flags)
 {
 	unsigned long	nbr;
+	int				arg_len;
 
 	check_space_is_neg(flags);
 	nbr = (unsigned int)va_arg(list, int);
+	arg_len = u_nbr_len(nbr, 16);
 	if (nbr == 0 && flags->has_dot && !flags->dot_val && !flags->len_field)
 		return ;
-	ope_dot(flags, count, 1, u_nbr_len(nbr, 16));
-	ope_space(flags, count, 1, u_nbr_len(nbr, 16));
+	ope_dot(flags, count, 1, &arg_len);
+	ope_space(flags, count, 1, &arg_len);
 	if (nbr == 0 && flags->dot_val && !flags->len_field)
 		ft_putchar(' ', count);
 	else
-		ft_itoh(nbr, is_min, count);
-	ope_space_suff(flags, count, 1, u_nbr_len(nbr, 16));
+		ft_itoh(nbr, is_min, count, flags);
+	ope_space_suff(flags, count, 1, arg_len);
 }
 
 void	to_pointer_address(va_list list, int *count, t_flags *flags)
 {
 	void	*input;
 	int		neg_p;
+	int		arg_len;
 
 	check_space_is_neg(flags);
 	neg_p = 1;
 	input = (void *)va_arg(list, void *);
+	arg_len = u_nbr_len((unsigned long)input, 16) + 2;
 	if ((unsigned long)input == 0 && flags->has_dot &&
 		!flags->dot_val && !flags->len_field)
 		return ;
-	ope_dot(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
-	ope_space(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
-	print_neg((unsigned long)input, count, flags, u_nbr_len((unsigned long)input, 16));
-	ft_itoh((unsigned long)input, 1, count);
-	ope_space_suff(flags, count, 1, u_nbr_len((unsigned long)input, 16) + 2);
+	ope_dot_address(flags, count, 1, &arg_len);
+	ope_space(flags, count, 1, &arg_len);
+	print_neg((unsigned long)input, count, flags, &arg_len);
+	ft_itoh((unsigned long)input, 1, count, flags);
+	ope_space_suff(flags, count, 1, arg_len);
 }

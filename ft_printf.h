@@ -37,7 +37,7 @@ void			ft_putchar(char c, int *count);
 void			ft_putnbr(int n, int *count);
 void			ft_unsigned_putnbr(unsigned int n, int *count);
 void			ft_putstr(char *str, int *count);
-void			ft_itoh(unsigned long nbr, int low, int *count);
+void			ft_itoh(unsigned long nbr, int low, int *count, t_flags *flgs);
 int				nbr_length(int nbr);
 int				u_nbr_len(unsigned long nbr, unsigned int size_base);
 int				ft_atoi(char *nptr);
@@ -55,10 +55,11 @@ void			to_percent(int *count, t_flags *flags);
 
 void			fill_space(char c, int size, int *count);
 
-void			ope_dot(t_flags *f, int *count, int arg, int len);
-void			ope_space(t_flags *flags, int *c, int arg, int len);
+void			ope_dot_address(t_flags *f, int *count, int arg, int *len);
+void			ope_dot(t_flags *f, int *count, int arg, int *len);
+void			ope_space(t_flags *flags, int *c, int arg, int *len);
 void			ope_space_suff(t_flags *flags, int *count, int arg, int len);
-void			print_neg(int arg, int *count, t_flags *flags, int arg_len);
+void			print_neg(int arg, int *count, t_flags *flags, int *arg_len);
 
 void			operands_string_dot(t_flags flags, int *count, char *str);
 void			ope_space_string(t_flags flags, int *count, char *str);

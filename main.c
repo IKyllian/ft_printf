@@ -51,8 +51,14 @@
 	// res = ft_printf("%30.*p\n", 20, &res);
 	// res2 = printf  ("%30.*p\n", 20, &res);
 	
-	res = ft_printf("%30.13p\n", &res);
-	res2 = printf  ("%30.13p\n", &res);
+	// res = ft_printf("%30.20p\n", &res);
+	// res2 = printf  ("%30.20p\n", &res);
+
+	res = ft_printf("%-20.-30p\n", NULL);
+	res2 = printf  ("%-20.-30p\n", NULL);
+
+	//  res = ft_printf("%-20.*p\n", -30, NULL);
+	//  res2 = printf  ("%-20.*p\n", -30, NULL);
 
 	//0, -40, 0, 0, 89, NULL, NULL
 
@@ -69,5 +75,5 @@
  	//res2 = printf(" *%-*.*i* *%*.*i* ", 6, 5, 10, 10, 21, -10);
  	printf("Res = %i\n", res);
 	printf("Res2 = %i", res2);
- }
- 
+ } //12 -- 14
+ //13 -- 

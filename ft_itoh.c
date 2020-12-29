@@ -42,7 +42,7 @@ int		u_nbr_len(unsigned long nbr, unsigned int size_base)
 	return (++length);
 }
 
-void	ft_itoh(unsigned long nbr, int low, int *count)
+void	ft_itoh(unsigned long nbr, int low, int *count, t_flags *flgs)
 {
 	char	*str;
 	int		i;
@@ -56,7 +56,9 @@ void	ft_itoh(unsigned long nbr, int low, int *count)
 	if (!(str = malloc(sizeof(char) * (u_nbr_len(nbr, 16) + 1))))
 		return ;
 	str[i--] = 0;
-	if (nbr == 0)
+	if (nbr == 0 && flgs->len_is_neg && !flgs->has_star)
+		str[i--] = ' ';
+	else if (nbr == 0)
 		str[i--] = '0';
 	while (nbr)
 	{
