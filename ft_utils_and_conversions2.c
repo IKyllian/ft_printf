@@ -56,13 +56,10 @@ void	to_percent(int *count, t_flags *flags)
 
 	arg_len = 1;
 	check_space_is_neg(flags);
-	//if (flags->has_dot && !flags->dot_val && !flags->len_field)
-	//	return ;
 	operands_string_dot(*flags, count, 1);
-	//ope_space_string(*flags, count, 1);
-	ope_space(flags, count, 1, &arg_len);
+	ope_space_string(*flags, count, 1);
 	ft_putchar('%', count);
-	ope_space_suff(flags, count, 1, arg_len);
+	ope_space_string_suff(*flags, count, 1);
 }
 
 void	to_character(va_list list, int *count, t_flags *flags)
@@ -73,11 +70,8 @@ void	to_character(va_list list, int *count, t_flags *flags)
 	check_space_is_neg(flags);
 	nbr = va_arg(list, int);
 	arg_len = 1;
-	if (nbr == 0 && flags->has_dot && !flags->dot_val && !flags->len_field)
-		return ;
 	operands_string_dot(*flags, count, 1);
-	//ope_space_string(*flags, count, 1);
-	ope_space(flags, count, 1, &arg_len);
+	ope_space_string(*flags, count, 1);
 	ft_putchar(nbr, count);
-	ope_space_suff(flags, count, 1, arg_len);
+	ope_space_string_suff(*flags, count, 1);
 }

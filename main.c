@@ -53,8 +53,15 @@
 
 	//0, -40, 0, 0, 89, NULL, NULL
 
-	res = ft_printf("Mine %3.4c-%3.4%-%3.4s\n", 89, "T");
-	res2 = printf  ("Real %3.4c-%3.4%-%3.4s\n", 89, "T");
+	// res = ft_printf("Mine %-7.-4c-%-7.-4%-%-7.-4s\n", 89, "T");
+	// res2 = printf  ("Real %-7.-4c-%-7.-4%-%-7.-4s\n", 89, "T");
+
+	// res = ft_printf("Mine %*.*c-%*.*%-%*.*s\n", -7, -4, 89, -7, -4, -7, -4, "T");
+	// res2 = printf  ("Real %*.*c-%*.*%-%*.*s\n", -7, -4, 89, -7, -4, -7, -4, "T");
+
+
+	res = ft_printf("Mine %.c-%.i-%.x-%.u-%.s-%.p\n", 0, 0, 0, 0, NULL, NULL);
+	res2 = printf  ("Real %.c-%.i-%.x-%.u-%.s-%.p\n", 0, 0, 0, 0, NULL, NULL);
 
 	// printf("Res = %i\n", res);
 	// printf("Res2 = %i\n", res2);
@@ -63,3 +70,4 @@
 	printf("Res2 = %i", res2);
  } //12 -- 14
  //13 -- 
+

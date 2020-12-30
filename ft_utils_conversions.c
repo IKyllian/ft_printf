@@ -97,9 +97,11 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 	neg_p = 1;
 	input = (void *)va_arg(list, void *);
 	arg_len = u_nbr_len((unsigned long)input, 16) + 2;
-	if ((unsigned long)input == 0 && flags->has_dot &&
-		!flags->dot_val && !flags->len_field)
+	if (!(char *)input && flags->has_dot && !flags->dot_val && !flags->len_field)
+	{
+		ft_putstr("0x", count);
 		return ;
+	}
 	ope_dot_address(flags, count, 1, &arg_len);
 	ope_space(flags, count, 1, &arg_len);
 	print_neg((unsigned long)input, count, flags, &arg_len);

@@ -18,14 +18,16 @@ void	operands_string_dot(t_flags flags, int *count, int len)
 	{
 		if (flags.has_zero && !flags.has_neg)
 		{
-			if (flags.len_field < len && !flags.len_is_neg)
+			if (flags.len_field < len && !flags.len_is_neg && flags.type == 's')
 				fill_space('0', (flags.dot_val - flags.len_field), count);
 			else
 				fill_space('0', (flags.dot_val - len), count);
 		}
 		else if (!flags.has_neg)
 		{
-			if (flags.len_field < len && !flags.len_is_neg)
+			//if ()
+			//	fill_space(' ', (flags.dot_val - flags.len), count);
+			if (flags.len_field < len && !flags.len_is_neg && flags.type == 's')
 				fill_space(' ', (flags.dot_val - flags.len_field), count);
 			else
 				fill_space(' ', (flags.dot_val - len), count);
@@ -50,12 +52,15 @@ void	ope_space_string_suff(t_flags flags, int *count, int len)
 	if (flags.has_neg && !flags.has_dot)
 		fill_space(' ', (flags.len_field - len), count);
 	else if (flags.has_dot && flags.len_is_neg && !flags.has_star)
-		fill_space(' ', (flags.len_field), count);
+	{
+		if (flags.type == 'c' || flags.type == '%')
+			fill_space(' ', (flags.len_field - len), count);
+		else 
+			fill_space(' ', flags.len_field, count);
+	}
 	else if (flags.has_neg && flags.dot_val)
 	{
-		if (flags.len_is_neg)
-			fill_space(' ', (flags.dot_val - len), count);
-		else if (flags.len_field >= len)
+		if (flags.len_is_neg || flags.len_field >= len)
 			fill_space(' ', (flags.dot_val - len), count);
 		else
 			fill_space(' ', (flags.dot_val - flags.len_field), count);
