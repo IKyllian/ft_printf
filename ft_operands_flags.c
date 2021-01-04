@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 12:08:29 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 16:30:19 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 10:21:43 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ope_dot_address(t_flags *f, int *count, int arg, int *len)
 					fill_space(' ', (f->dot_val - f->len_field - 2), count);
 			}
 			else if (f->dot_val - *len > 0 && (*len - f->len_field == 1))
-					fill_space(' ', (f->dot_val - *len - 1), count);
+				fill_space(' ', (f->dot_val - *len - 1), count);
 			else if (f->dot_val - *len > 0)
 				fill_space(' ', (f->dot_val - *len), count);
 		}

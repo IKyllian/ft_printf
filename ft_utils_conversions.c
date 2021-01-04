@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 16:43:51 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:21:11 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 	neg_p = 1;
 	input = (void *)va_arg(list, void *);
 	arg_len = u_nbr_len((unsigned long)input, 16) + 2;
-	if (!(char *)input && flags->has_dot && !flags->dot_val && !flags->len_field)
+	if (!(char *)input && flags->has_dot &&
+		!flags->dot_val && !flags->len_field)
 	{
 		ft_putstr("0x", count);
 		return ;

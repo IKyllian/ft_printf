@@ -60,8 +60,11 @@
 	// res2 = printf  ("Real %*.*c-%*.*%-%*.*s\n", -7, -4, 89, -7, -4, -7, -4, "T");
 
 
-	res = ft_printf("Mine %.c-%.i-%.x-%.u-%.s-%.p\n", 0, 0, 0, 0, NULL, NULL);
-	res2 = printf  ("Real %.c-%.i-%.x-%.u-%.s-%.p\n", 0, 0, 0, 0, NULL, NULL);
+	res = ft_printf("Mine %16.-10c-%16.-10i-%16.-10x-%16.-10u-%16.-10s-%16.-10p-%16.-10%\n", 0, 0, 0, 0, NULL, NULL);
+	res2 = printf  ("Real %16.-10c-%16.-10i-%16.-10x-%16.-10u-%16.-10s-%16.-10p-%16.-10%\n", 0, 0, 0, 0, NULL, NULL);
+
+	// res = ft_printf("Mine %*.i\n", 14, 42);
+	// res2 = printf  ("Real %*.i\n", 14, 42);
 
 	// printf("Res = %i\n", res);
 	// printf("Res2 = %i\n", res2);

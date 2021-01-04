@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operands_string_flags.c                            :+:      :+:    :+:   */
+/*   ft_operands_string_flags.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 12:08:17 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 12:02:50 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 10:01:17 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	operands_string_dot(t_flags flags, int *count, int len)
 		}
 		else if (!flags.has_neg)
 		{
-			//if ()
-			//	fill_space(' ', (flags.dot_val - flags.len), count);
 			if (flags.len_field < len && !flags.len_is_neg && flags.type == 's')
 				fill_space(' ', (flags.dot_val - flags.len_field), count);
 			else
@@ -37,7 +35,6 @@ void	operands_string_dot(t_flags flags, int *count, int len)
 
 void	ope_space_string(t_flags flags, int *count, int len)
 {
-	
 	if (flags.len_field && !flags.has_neg && !flags.has_dot)
 	{
 		if (flags.has_zero)
@@ -55,15 +52,18 @@ void	ope_space_string_suff(t_flags flags, int *count, int len)
 	{
 		if (flags.type == 'c' || flags.type == '%')
 			fill_space(' ', (flags.len_field - len), count);
-		else 
+		else
 			fill_space(' ', flags.len_field, count);
 	}
 	else if (flags.has_neg && flags.dot_val)
 	{
-		if (flags.len_is_neg || flags.len_field >= len)
+		if (flags.len_is_neg || flags.len_field >= len ||
+			(!flags.len_field && (flags.type == 'c' || flags.type == '%')))
 			fill_space(' ', (flags.dot_val - len), count);
 		else
+		{
 			fill_space(' ', (flags.dot_val - flags.len_field), count);
+		}
 	}
 }
 
