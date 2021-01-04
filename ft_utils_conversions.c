@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/04 11:21:11 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:58:34 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	to_decimal(va_list list, int *count, t_flags *flags)
 
 void	to_unsigned_decimal(va_list list, int *count, t_flags *flags)
 {
-	unsigned long	nbr;
-	int				arg_len;
+	unsigned long long	nbr;
+	int					arg_len;
 
 	check_space_is_neg(flags);
 	nbr = (unsigned int)va_arg(list, int);
@@ -70,8 +70,8 @@ void	to_unsigned_decimal(va_list list, int *count, t_flags *flags)
 
 void	to_hexa(va_list list, int *count, int is_min, t_flags *flags)
 {
-	unsigned long	nbr;
-	int				arg_len;
+	unsigned long long	nbr;
+	int					arg_len;
 
 	check_space_is_neg(flags);
 	nbr = (unsigned int)va_arg(list, int);
@@ -96,7 +96,7 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 	check_space_is_neg(flags);
 	neg_p = 1;
 	input = (void *)va_arg(list, void *);
-	arg_len = u_nbr_len((unsigned long)input, 16) + 2;
+	arg_len = u_nbr_len((unsigned long long)input, 16) + 2;
 	if (!(char *)input && flags->has_dot &&
 		!flags->dot_val && !flags->len_field)
 	{
@@ -105,7 +105,7 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 	}
 	ope_dot_address(flags, count, 1, &arg_len);
 	ope_space(flags, count, 1, &arg_len);
-	print_neg((unsigned long)input, count, flags, &arg_len);
-	ft_itoh((unsigned long)input, 1, count, flags);
+	print_neg((int)input, count, flags, &arg_len);
+	ft_itoh((unsigned long long)input, 1, count, flags);
 	ope_space_suff(flags, count, 1, arg_len);
 }

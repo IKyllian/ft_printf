@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:16:26 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/17 13:48:24 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 12:01:23 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,13 @@ void	ft_putnbr(int n, int *count)
 		ft_putchar(nb + 48, count);
 }
 
-void	ft_unsigned_putnbr(unsigned int n, int *count)
+void	ft_unsigned_putnbr(unsigned long long n, int *count)
 {
-	unsigned long nb;
-
-	nb = n;
-	if (nb >= 10)
+	if (n >= 10)
 	{
-		ft_putnbr(nb / 10, count);
-		ft_putnbr(nb % 10, count);
+		ft_putnbr(n / 10, count);
+		ft_putnbr(n % 10, count);
 	}
 	else
-		ft_putchar(nb + 48, count);
+		ft_putchar(n + 48, count);
 }

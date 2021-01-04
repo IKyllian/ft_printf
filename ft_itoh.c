@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 15:08:10 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:48:50 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		nbr_length(int nbr)
 	return (++length);
 }
 
-int		u_nbr_len(unsigned long nbr, unsigned int size_base)
+int		u_nbr_len(unsigned long long nbr, unsigned int size_base)
 {
 	int			length;
 
@@ -42,29 +42,29 @@ int		u_nbr_len(unsigned long nbr, unsigned int size_base)
 	return (++length);
 }
 
-void	ft_itoh(unsigned long nbr, int low, int *count, t_flags *flgs)
+void	ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg)
 {
 	char	*str;
 	int		i;
 	char	*base;
 
-	i = u_nbr_len(nbr, 16);
+	i = u_nbr_len(nb, 16);
 	if (low)
 		base = "0123456789abcdef";
 	else
 		base = "0123456789ABCDEF";
-	if (!(str = malloc(sizeof(char) * (u_nbr_len(nbr, 16) + 1))))
+	if (!(str = malloc(sizeof(char) * (u_nbr_len(nb, 16) + 1))))
 		return ;
 	str[i--] = 0;
-	if (nbr == 0 && flgs->len_is_neg && !flgs->has_star)
+	if (nb == 0 && flg->len_is_neg && !flg->has_star)
 		str[i--] = ' ';
-	else if (nbr == 0)
+	else if (nb == 0)
 		str[i--] = '0';
-	while (nbr)
+	while (nb)
 	{
-		str[i--] = base[nbr % 16];
-		nbr /= 16;
+		str[i--] = base[nb % 16];
+		nb /= 16;
 	}
-	ft_putstr(str, count);
+	ft_putstr(str, ct);
 	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:40:28 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 15:32:40 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:51:27 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
 
 typedef struct	s_struct
 {
@@ -35,11 +33,11 @@ typedef struct	s_struct
 int				ft_printf(const char *format, ...);
 void			ft_putchar(char c, int *count);
 void			ft_putnbr(int n, int *count);
-void			ft_unsigned_putnbr(unsigned int n, int *count);
+void			ft_unsigned_putnbr(unsigned long long n, int *count);
 void			ft_putstr(char *str, int *count);
-void			ft_itoh(unsigned long nbr, int low, int *count, t_flags *flgs);
+void			ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg);
 int				nbr_length(int nbr);
-int				u_nbr_len(unsigned long nbr, unsigned int size_base);
+int				u_nbr_len(unsigned long long nbr, unsigned int size_base);
 int				ft_atoi(char *nptr);
 int				ft_strlen(const char *s);
 
