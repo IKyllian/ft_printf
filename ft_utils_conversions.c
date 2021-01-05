@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:36:40 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/04 11:58:34 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 13:55:17 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	to_unsigned_decimal(va_list list, int *count, t_flags *flags)
 	ope_space_suff(flags, count, 1, arg_len);
 }
 
-void	to_hexa(va_list list, int *count, int is_min, t_flags *flags)
+int		to_hexa(va_list list, int *count, int is_min, t_flags *flags)
 {
 	unsigned long long	nbr;
 	int					arg_len;
@@ -77,17 +77,21 @@ void	to_hexa(va_list list, int *count, int is_min, t_flags *flags)
 	nbr = (unsigned int)va_arg(list, int);
 	arg_len = u_nbr_len(nbr, 16);
 	if (nbr == 0 && flags->has_dot && !flags->dot_val && !flags->len_field)
-		return ;
+		return (0);
 	ope_dot(flags, count, 1, &arg_len);
 	ope_space(flags, count, 1, &arg_len);
 	if (nbr == 0 && flags->dot_val && !flags->len_field)
 		ft_putchar(' ', count);
 	else
-		ft_itoh(nbr, is_min, count, flags);
+	{
+		if (ft_itoh(nbr, is_min, count, flags) == 1)
+			return (1);
+	}
 	ope_space_suff(flags, count, 1, arg_len);
+	return (0);
 }
 
-void	to_pointer_address(va_list list, int *count, t_flags *flags)
+int		to_pointer_address(va_list list, int *count, t_flags *flags)
 {
 	void	*input;
 	int		neg_p;
@@ -101,11 +105,13 @@ void	to_pointer_address(va_list list, int *count, t_flags *flags)
 		!flags->dot_val && !flags->len_field)
 	{
 		ft_putstr("0x", count);
-		return ;
+		return (0);
 	}
 	ope_dot_address(flags, count, 1, &arg_len);
 	ope_space(flags, count, 1, &arg_len);
 	print_neg((int)input, count, flags, &arg_len);
-	ft_itoh((unsigned long long)input, 1, count, flags);
+	if (ft_itoh((unsigned long long)input, 1, count, flags) == 1)
+		return (1);
 	ope_space_suff(flags, count, 1, arg_len);
+	return (0);
 }

@@ -6,24 +6,19 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/05 10:45:43 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 14:01:42 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fill_struct_spaces(char **str, t_flags *flags)
+int		fill_struct_spaces(char **str, t_flags *flags)
 {
 	char	*nb_spaces;
 	int		i;
 
-	i = 0;
-	while ((*str)[i] && ((*str)[i] >= 48 && (*str)[i] <= 57))
-		i++;
-	if (*(*str - 1) == '-' && *(*str - 2) == '.')
-		i++;
-	if (!(nb_spaces = malloc(sizeof(char) * (i + 1))))
-		return ;
+	if (!(nb_spaces = malloc(sizeof(char) * (ft_count_numbers(str) + 1))))
+		return (1);
 	i = 0;
 	if (*(*str - 1) == '-' && *(*str - 2) == '.')
 		nb_spaces[i++] = '-';
@@ -39,6 +34,7 @@ void	fill_struct_spaces(char **str, t_flags *flags)
 	else
 		flags->len_field = ft_atoi(nb_spaces);
 	free(nb_spaces);
+	return (0);
 }
 
 void	fill_struct_star(char **str, t_flags *flags, va_list list)
@@ -59,7 +55,7 @@ void	fill_struct_star(char **str, t_flags *flags, va_list list)
 	}
 }
 
-void	check_prefix(char **str, t_flags *flags, va_list list)
+int		check_prefix(char **str, t_flags *flags, va_list list)
 {
 	while (*(*str) && is_flags(*(*str)))
 	{
@@ -76,38 +72,28 @@ void	check_prefix(char **str, t_flags *flags, va_list list)
 		if (*(*str) == '*')
 			fill_struct_star(str, flags, list);
 		if (*(*str) >= 48 && *(*str) <= 57)
-			fill_struct_spaces(str, flags);
+		{
+			if (fill_struct_spaces(str, flags) == 1)
+				return (1);
+		}
 		else
 			(*str)++;
 	}
+	return (0);
 }
 
-void	ft_display(char **str, va_list list, int *count)
+int		ft_display(char **str, va_list list, int *count)
 {
 	t_flags flags;
 
 	struct_initialize(&flags);
 	if (is_flags(*(*str)))
-		check_prefix(str, &flags, list);
+		if (check_prefix(str, &flags, list) == 1)
+			return (1);
 	flags.type = *(*str);
-	if (*(*str) == 's')
-		to_string(list, count, flags);
-	else if (*(*str) == 'd' || *(*str) == 'i')
-		to_decimal(list, count, &flags);
-	else if (*(*str) == 'u')
-		to_unsigned_decimal(list, count, &flags);
-	else if (*(*str) == 'x')
-		to_hexa(list, count, 1, &flags);
-	else if (*(*str) == 'X')
-		to_hexa(list, count, 0, &flags);
-	else if (*(*str) == 'c')
-		to_character(list, count, &flags);
-	else if (*(*str) == '%')
-		to_percent(count, &flags);
-	else if (*(*str) == 'p')
-		to_pointer_address(list, count, &flags);
-	else
-		ft_putchar(*(*str), count);
+	if (ft_convert(str, list, count, &flags) == 1)
+		return (1);
+	return (0);
 }
 
 int		ft_printf(const char *format, ...)
@@ -127,7 +113,8 @@ int		ft_printf(const char *format, ...)
 		{
 			++str;
 			if (*str)
-				ft_display(&str, list, &count);
+				if (ft_display(&str, list, &count) == 1)
+					return (-1);
 		}
 		if (*str)
 			str++;

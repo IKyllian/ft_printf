@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 13:07:45 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/04 11:48:50 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 13:17:00 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		u_nbr_len(unsigned long long nbr, unsigned int size_base)
 	return (++length);
 }
 
-void	ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg)
+int		ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg)
 {
 	char	*str;
 	int		i;
@@ -54,7 +54,7 @@ void	ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg)
 	else
 		base = "0123456789ABCDEF";
 	if (!(str = malloc(sizeof(char) * (u_nbr_len(nb, 16) + 1))))
-		return ;
+		return (1);
 	str[i--] = 0;
 	if (nb == 0 && flg->len_is_neg && !flg->has_star)
 		str[i--] = ' ';
@@ -67,4 +67,5 @@ void	ft_itoh(unsigned long long nb, int low, int *ct, t_flags *flg)
 	}
 	ft_putstr(str, ct);
 	free(str);
+	return (0);
 }
