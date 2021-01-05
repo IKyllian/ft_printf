@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:40:28 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/04 12:16:14 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 10:46:02 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				u_nbr_len(unsigned long long nbr, unsigned int size_base);
 int				ft_atoi(char *nptr);
 int				ft_strlen(const char *s);
 
-int				is_conversions(char c);
+int				is_flags(char c);
 void			struct_initialize(t_flags *flags);
 void			check_space_is_neg(t_flags *flags);
 void			to_decimal(va_list list, int *count, t_flags *flags);
@@ -52,7 +52,6 @@ void			to_character(va_list list, int *count, t_flags *flags);
 void			to_pointer_address(va_list list, int *count, t_flags *flags);
 void			to_string(va_list list, int *count, t_flags flags);
 void			to_percent(int *count, t_flags *flags);
-
 
 void			ope_dot_address(t_flags *f, int *count, int arg, int *len);
 void			ope_dot(t_flags *f, int *count, int arg, int *len);

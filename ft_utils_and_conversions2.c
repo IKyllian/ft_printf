@@ -6,16 +6,16 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 12:37:48 by kdelport          #+#    #+#             */
-/*   Updated: 2020/12/28 15:03:01 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 10:45:52 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		is_conversions(char c)
+int		is_flags(char c)
 {
-	if (c == 's' || c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' ||
-		c == 'c' || c == '%' || c == 'p')
+	if (c == '0' || c == '-' || c == '*' || c == '.' ||
+		(c >= 48 && c <= 57))
 		return (1);
 	else
 		return (0);

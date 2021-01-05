@@ -6,7 +6,7 @@
 /*   By: kdelport <kdelport@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 09:56:31 by kdelport          #+#    #+#             */
-/*   Updated: 2021/01/04 12:06:40 by kdelport         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 10:45:43 by kdelport         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fill_struct_star(char **str, t_flags *flags, va_list list)
 
 void	check_prefix(char **str, t_flags *flags, va_list list)
 {
-	while (*(*str) && !is_conversions(*(*str)))
+	while (*(*str) && is_flags(*(*str)))
 	{
 		if (*(*str) == '0' && !flags->has_neg && !flags->has_dot)
 			flags->has_zero = 1;
@@ -87,7 +87,7 @@ void	ft_display(char **str, va_list list, int *count)
 	t_flags flags;
 
 	struct_initialize(&flags);
-	if (!is_conversions(*(*str)))
+	if (is_flags(*(*str)))
 		check_prefix(str, &flags, list);
 	flags.type = *(*str);
 	if (*(*str) == 's')
@@ -106,6 +106,8 @@ void	ft_display(char **str, va_list list, int *count)
 		to_percent(count, &flags);
 	else if (*(*str) == 'p')
 		to_pointer_address(list, count, &flags);
+	else
+		ft_putchar(*(*str), count);
 }
 
 int		ft_printf(const char *format, ...)
@@ -124,9 +126,11 @@ int		ft_printf(const char *format, ...)
 		else
 		{
 			++str;
-			ft_display(&str, list, &count);
+			if (*str)
+				ft_display(&str, list, &count);
 		}
-		str++;
+		if (*str)
+			str++;
 	}
 	va_end(list);
 	return (count);
